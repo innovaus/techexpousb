@@ -268,7 +268,7 @@ var handleTransactionHistory = function(req, res) {
           "speech": "<speak>Specify account type, Say Checking, Saving, CD</speak>",
           "displayText": "",
           "data": {},
-          "contextOut": [],
+          "contextOut": [{"name":"transaction", "lifespan":2, "parameters":{"city":"Rome"}}],
           "source": "US Bank"
           }
         res.send(response);
