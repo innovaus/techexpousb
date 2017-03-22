@@ -17,23 +17,27 @@ var appRouter = function(app) {
       // handleLogin(req, res);
     }
     // handle branch locator intent
-    else if(intent == 'branch-locator-service') {
+    else if(intent == 'BranchLocatorIntent') {
         handleBranchLocator(req, res);
     }
     // handle account-service
-    else if(intent == 'account-service'){
+    else if(intent == 'GetBalanceIntent'){
         handleAccountBalance(req, res);
     }
     // handle Transaction History
-    else if (intent == 'transaction-service'){
+    else if (intent == 'GetTransactionsIntent'){
+        handleTransactionHistory(req, res);
+    }
+    // handle Due Date
+    else if (intent == 'GetDueDatesIntent'){
         handleTransactionHistory(req, res);
     }
     // handle auto loan
-    else if (intent == 'auto-loan-service'){
+    else if (intent == 'GetAutoLoanRatesIntent'){
         handleAutoLoan(req, res);
     }
     // handle home loan
-    else if (intent == 'home-loan-service'){
+    else if (intent == 'GetHomeLoanRatesIntent'){
         handleHomeLoan(req, res);
     }
     // handle default intent == 'Default Welcome Intent'
