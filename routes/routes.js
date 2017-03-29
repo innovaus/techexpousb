@@ -500,7 +500,7 @@ var handleAccountTypeSelectionIntent = function(req, res) {
     if (accountType == 'checkings'){
       var response =
         {
-        "speech": "<speak>Say a for Checking account ending with 1234. Say b for Checking account ending with 3456</speak>",
+        "speech": "<speak>You have 2 checking accounts: a account ending with 7174 and b account ending with 5901. Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":"checkings"}}],
