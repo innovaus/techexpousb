@@ -541,7 +541,7 @@ var handleAccountSelection = function(req, res) {
   var context =  req.body.result.contexts;
   var accountType;
   if(context!=null){
-    for(int i=0;i<context.length;i++){
+    for(var i=0;i<context.length;i++){
       if(context[i].name == "accountType"){
         accountType = context[i].parameters.accountType;
       }
