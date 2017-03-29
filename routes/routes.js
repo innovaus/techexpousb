@@ -38,7 +38,9 @@ var appRouter = function(app) {
     }
     // handle Account selection
     else if (intent == 'AccountSelectionIntent'){
+        console.log("BEFORE>>>>>>>");
         handleAccountSelection(req, res);
+        console.log("AFTER>>>>>>>");
     }
     // handle auto loan
     else if (intent == 'GetAutoLoanRatesIntent'){
