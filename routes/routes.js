@@ -276,7 +276,7 @@ var handleTransactionHistory = function(req, res) {
           "speech": "<speak>Specify account type, Say Checking, Saving, CD</speak>",
           "displayText": "",
           "data": {},
-          "contextOut": [{"action":"transaction", "lifespan":1}],
+          "contextOut": [{"action":"transaction", "lifespan":2}],
           "source": "US Bank"
           }
         res.send(response);
@@ -545,7 +545,7 @@ var handleAccountTypeSelectionIntent = function(req, res) {
         "speech": "<speak>Say a for Checking account ending with 1234. Say b for Checking account ending with 3456</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"accountType":"checkings", "lifespan":1, "parameters":{"city":"Rome"}}],
+        "contextOut": [{"accountType":"checkings", "lifespan":2}],
         "source": "US Bank"
         }
       res.send(response);
