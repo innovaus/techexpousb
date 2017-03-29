@@ -231,7 +231,7 @@ var handleAccountBalance = function(req, res) {
 
 // Start  handleTransactionHistory
 var handleTransactionHistory = function(req, res) {
-  //console.log(req.body.result.parameters.accountType);
+  console.log(req.body.result.parameters.accountType);
   var accountType = req.body.result.parameters.accountType;
   if(accountType == null || accountType == "" ){
     if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
@@ -403,7 +403,7 @@ var handleTransactionHistory = function(req, res) {
 
 // Start  handleAccountSelection
 var handleAccountSelection = function(req, res) {
-  //console.log(req.body.result.parameters.accountType);
+  console.log(req.body.result.parameters.accountType);
   var accountType = req.body.result.parameters.accountType;
   if(accountType == null || accountType == "" ){
     if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
