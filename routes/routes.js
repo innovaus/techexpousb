@@ -640,16 +640,31 @@ var handleAccountSelection = function(req, res) {
     }
   } else {
     if (accountType == 'checkings'){
-      var response =
-        {
-        "speech": "<speak>Your last transaction as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Checking account ending with <say-as interpret-as=\"digits\">3562 </say-as> is - $159.90 on <say-as interpret-as=\"date\" format=\"dm\" > 2-12 </say-as>  Web Author</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [],
-        "source": "US Bank"
-        }
-      res.send(response);
+      if(letter == "a"){
+        var response =
+          {
+          "speech": "<speak>For your checking account ending in <say-as interpret-as="digits">7174</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
+          "displayText": "",
+          "data": {},
+          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":"checkings"}},
+                          {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":"a"}}
+                        ],
+          "source": "US Bank"
+          }
+        res.send(response);
+      } else {
+        var response =
+          {
+          "speech": "<speak>For your checking account ending in <say-as interpret-as="digits">5901</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
+          "displayText": "",
+          "data": {},
+          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":"checkings"}},
+                          {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":"b"}}
+                        ],
+          "source": "US Bank"
+          }
+        res.send(response);
+      }
     }else if(accountType == 'savings'){
       var response =
         {
