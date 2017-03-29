@@ -410,50 +410,8 @@ var handleAccountTypeSelectionIntent = function(req, res) {
   console.log(req.body.result.parameters.accountType);
   var accountType = req.body.result.parameters.accountType;
   if(accountType == null || accountType == "" ){
-    if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-      var branchResponse =
-                    {
-                    "speech": "",
-                    "displayText": "",
-                    "messages": [
-                        {
-                          "title": "Choose Account Type: ",
-                          "subtitle": "",
-                          "buttons": [
-                            {
-                              "text": "Checking xx3562",
-                              "postback": "Transactions of Checking"
-                            },
-                            {
-                              "text": "Saving xxx4321",
-                              "postback": "Transactions of Saving"
-                            },
-                            {
-                              "text": "CD xxx4789",
-                              "postback": "Transactions of CD"
-                            }
-                          ],
-                          "type": 1
-                        }
-                      ],
-
-                    "contextOut": [],
-                    "source": "U.S Bank"
-                    }
-          res.send(branchResponse);
-          return;
-      } else {
-        var response =
-          {
-          "speech": "<speak>Specify account type, Say Checking, Saving, CD</speak>",
-          "displayText": "",
-          "data": {},
-          "contextOut": [],
-          "source": "US Bank"
-          }
-        res.send(response);
-      }
-    }
+    getAccountTypeResponse(req, res);
+  }
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     if (accountType == 'checkings'){
        var response =
@@ -545,7 +503,7 @@ var handleAccountTypeSelectionIntent = function(req, res) {
         "speech": "<speak>Say a for Checking account ending with 1234. Say b for Checking account ending with 3456</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"checkings", "lifespan":2}],
+        "contextOut": [{"name":"accountType", "lifespan":2, "parameters":{"accountType":"checkings"}}],
         "source": "US Bank"
         }
       res.send(response);
@@ -578,53 +536,19 @@ var handleAccountTypeSelectionIntent = function(req, res) {
 
 // Start  handleAccountSelection
 var handleAccountSelection = function(req, res) {
-  console.log(req.body.result.parameters.accountType);
-  var accountType = req.body.result.parameters.accountType;
-  if(accountType == null || accountType == "" ){
-    if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-      var branchResponse =
-                    {
-                    "speech": "",
-                    "displayText": "",
-                    "messages": [
-                        {
-                          "title": "Choose Account Type: ",
-                          "subtitle": "",
-                          "buttons": [
-                            {
-                              "text": "Checking xx3562",
-                              "postback": "Transactions of Checking"
-                            },
-                            {
-                              "text": "Saving xxx4321",
-                              "postback": "Transactions of Saving"
-                            },
-                            {
-                              "text": "CD xxx4789",
-                              "postback": "Transactions of CD"
-                            }
-                          ],
-                          "type": 1
-                        }
-                      ],
-
-                    "contextOut": [],
-                    "source": "U.S Bank"
-                    }
-          res.send(branchResponse);
-          return;
-      } else {
-        var response =
-          {
-          "speech": "<speak>Specify account type, Say Checking, Saving, CD</speak>",
-          "displayText": "",
-          "data": {},
-          "contextOut": [],
-          "source": "US Bank"
-          }
-        res.send(response);
+  console.log(req.body.result.parameters.account-selection-letters);
+  var letter = req.body.result.parameters.account-selection-letters;
+  var context =  req.body.result.contexts;
+  var accountType;
+  if(context!=null){
+    for(int i=0;i<context.length;i++){
+      if(context[i].name == "accountType"){
+        accountType = context[i].parameters.accountType;
       }
     }
+  }
+  console.log(accountType);
+
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     if (accountType == 'checkings'){
        var response =
@@ -747,6 +671,52 @@ var handleAccountSelection = function(req, res) {
   }
 }
 // End handleAccountSelection
+
+var getAccountTypeResponse =function (req, res) {
+  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+    var branchResponse =
+                  {
+                  "speech": "",
+                  "displayText": "",
+                  "messages": [
+                      {
+                        "title": "Choose Account Type: ",
+                        "subtitle": "",
+                        "buttons": [
+                          {
+                            "text": "Checking xx3562",
+                            "postback": "Transactions of Checking"
+                          },
+                          {
+                            "text": "Saving xxx4321",
+                            "postback": "Transactions of Saving"
+                          },
+                          {
+                            "text": "CD xxx4789",
+                            "postback": "Transactions of CD"
+                          }
+                        ],
+                        "type": 1
+                      }
+                    ],
+
+                  "contextOut": [],
+                  "source": "U.S Bank"
+                  }
+        res.send(branchResponse);
+        return;
+    } else {
+      var response =
+        {
+        "speech": "<speak>Specify account type, Say Checking, Saving, CD</speak>",
+        "displayText": "",
+        "data": {},
+        "contextOut": [],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }
+}
 
 // Start Handle Branch Locator
 var handleBranchLocator = function(req, res) {
