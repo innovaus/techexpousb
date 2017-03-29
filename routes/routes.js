@@ -503,7 +503,7 @@ var handleAccountTypeSelectionIntent = function(req, res) {
         "speech": "<speak>Say a for Checking account ending with 1234. Say b for Checking account ending with 3456</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accountType", "lifespan":2, "parameters":{"accountType":"checkings"}}],
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":"checkings"}}],
         "source": "US Bank"
         }
       res.send(response);
@@ -542,7 +542,7 @@ var handleAccountSelection = function(req, res) {
   var accountType;
   if(context!=null){
     for(var i=0;i<context.length;i++){
-      if(context[i].name == "accountType"){
+      if(context[i].name == "accounttype"){
         accountType = context[i].parameters.accountType;
       }
     }
