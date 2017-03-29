@@ -170,6 +170,32 @@ var handleLogin = function(req, res) {
 // Start handleAccountBalance
 var handleAccountBalance = function(req, res) {
   //console.log(req.body.originalRequest.source);
+  var context =  req.body.result.contexts;
+  var accountType;
+  var letter;
+  if(context!=null){
+    for(var i=0;i<context.length;i++){
+      if(context[i].name == "accounttype"){
+        accountType = context[i].parameters.accountType;
+      }
+      if(context[i].name == "accountletter"){
+        letter = context[i].parameters.accountletter;
+      }
+    }
+  }
+  console.log(accountType);
+
+  if(accountType == null){
+    var response =
+      {
+      "speech": "<speak>Please select the account. These are the types of accounts you have with us: checking, savings, credit, Which one would you like? Or, for more options, say help.</speak>",
+      "displayText": "",
+      "data": {},
+      "contextOut": [],
+      "source": "US Bank"
+      }
+    res.send(response);
+  }
 
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
@@ -216,19 +242,47 @@ var handleAccountBalance = function(req, res) {
     }
     res.send(response);
   } else {
-    var response =
-      {
-      "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
-      + "Checking account ending with <say-as interpret-as=\"digits\">3562 </say-as> is $15,382.57"
-      + ", Saving  account ending with <say-as interpret-as=\"digits\">4321 </say-as>is $4,655.00"
-      + ", CD account ending with <say-as interpret-as=\"digits\">4789 </say-as> is $400,655.00 </speak>",
-      "displayText": "",
-      "data": {},
-      "contextOut": [],
-      "source": "US Bank"
-      }
-    res.send(response);
+    if(accountType == "checkings" && letter == "a"){
+      var response =
+        {
+        "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+      "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
+        + "Checking account ending with <say-as interpret-as=\"digits\">7174 </say-as> is $727.41"
+        + "</speak>",
+        "displayText": "",
+        "data": {},
+        "contextOut": [],
+        "source": "US Bank"
+        }
+      res.send(response);
+    } else if(accountType == "checkings" && letter == "b"){
+      var response =
+        {
+        "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+      "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
+        + "Checking account ending with <say-as interpret-as=\"digits\">3562 </say-as> is $0.25"
+        + "</speak>",
+        "displayText": "",
+        "data": {},
+        "contextOut": [],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }else if(accountType == "savings"){
+      var response =
+        {
+        "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+      "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
+        + ", Saving  account ending with <say-as interpret-as=\"digits\">4321 </say-as>is $4,655.00"
+        + "</speak>",
+        "displayText": "",
+        "data": {},
+        "contextOut": [],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }
+
   }
 }
 // End handleAccountBalance
@@ -536,13 +590,7 @@ var handleAccountTypeSelectionIntent = function(req, res) {
 
 // Start  handleAccountSelection
 var handleAccountSelection = function(req, res) {
-  console.log("handleAccountSelection");
-  console.log(req.body.result);
-  console.log(req.body.result.parameters.accountletter);
-
   var letter = req.body.result.parameters.accountletter;
-  console.log(letter);
-  console.log("AFTER>>>>>>>");
   var context =  req.body.result.contexts;
   var accountType;
   if(context!=null){
