@@ -500,7 +500,7 @@ var handleAccountTypeSelectionIntent = function(req, res) {
     if (accountType == 'checkings'){
       var response =
         {
-        "speech": "<speak>You have 2 checking accounts: a account ending with 7174 and b account ending with 5901. Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>",
+        "speech": "<speak>You have 2 checking accounts: a account ending with <say-as interpret-as=\"digits\">7174</say-as> and b account ending with <say-as interpret-as=\"digits\">5901</say-as>. Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":"checkings"}}],
@@ -643,7 +643,7 @@ var handleAccountSelection = function(req, res) {
       if(letter == "a"){
         var response =
           {
-          "speech": "<speak>For your checking account ending in <say-as interpret-as="digits">7174</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
+          "speech": "<speak>For your checking account ending in <say-as interpret-as=\"digits\">7174</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
           "displayText": "",
           "data": {},
           "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":"checkings"}},
@@ -655,7 +655,7 @@ var handleAccountSelection = function(req, res) {
       } else {
         var response =
           {
-          "speech": "<speak>For your checking account ending in <say-as interpret-as="digits">5901</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
+          "speech": "<speak>For your checking account ending in <say-as interpret-as=\"digits\">5901</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
           "displayText": "",
           "data": {},
           "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":"checkings"}},
