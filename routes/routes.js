@@ -114,7 +114,7 @@ var handleWelcomeIntent = function(req, res) {
   } else {
     var response =
       {
-      "speech": "<speak>How may I help you? Specify balance check, transaction history, branch locator</speak>",
+      "speech": "<speak>Hi! Welcome back to US Bank. These are the types of accounts you have with us: checking, savings, credit, Which one would you like? Or, for more options, say help.</speak>",
       "displayText": "",
       "data": {},
       "contextOut": [],
