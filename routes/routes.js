@@ -536,8 +536,13 @@ var handleAccountTypeSelectionIntent = function(req, res) {
 
 // Start  handleAccountSelection
 var handleAccountSelection = function(req, res) {
+  console.log("handleAccountSelection");
+  console.log(req.body.result);
   console.log(req.body.result.parameters.account-selection-letters);
+
   var letter = req.body.result.parameters.account-selection-letters;
+  console.log(letter);
+  console.log("AFTER>>>>>>>");
   var context =  req.body.result.contexts;
   var accountType;
   if(context!=null){
