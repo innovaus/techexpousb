@@ -624,7 +624,7 @@ var getAccountTypeResponse =function (req, res,accountType) {
                             "type": 1
                           }
                         ],
-          "contextOut": [],
+          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":"checkings"}}],
           "source": "US Bank"
           }
           res.send(response);
