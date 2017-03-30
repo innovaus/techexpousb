@@ -369,49 +369,79 @@ var handleAccountSelection = function(req, res) {
 
 var getBalanceResponse =function (req, res,accountType,letter) {
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    var response =
-    {
-    "speech": "",
-    "displayText": "",
-    "messages": [
-                    {
-                      "title": "Your Balance as of " + getDate() + " " +getTime(),
-                      "subtitle": "Checking xxx3562: $15,382.57",
-                      "buttons": [
-                        {
-                          "text": "Transactions",
-                          "postback": "Transactions of Checking"
-                        }
-                      ],
-                      "type": 1
-                    },
-                     {
-                      "title": "Your Balance as of " + getDate()  + " " + getTime(),
-                      "subtitle": "Saving  xxx4321: $4,655.00",
-                      "buttons": [
-                        {
-                          "text": "Transactions",
-                          "postback": "Transactions of Saving"
-                        }
-                      ],
-                      "type": 1
-                    },
-                     {
-                      "title": "Your Balance as of " + getDate() + " " + getTime(),
-                      "subtitle": "CD xxx4789: $400,655.00",
-                      "buttons": [
-                        {
-                          "text": "Transactions",
-                          "postback": "Transactions of CD"
-                        }
-                      ],
-                      "type": 1
-                    }
-                  ],
-    "contextOut": [],
-    "source": "US Bank"
+    if(accountType == "checkings" && letter == "a"){
+      var response =
+      {
+      "speech": "",
+      "displayText": "",
+      "messages": [
+                      {
+                        "title": "Your Balance as of " + getDate() + " " +getTime(),
+                        "subtitle": "Checking xxx7174: $727.41",
+                        "buttons": [
+                          {
+                            "text": "Get Transactions",
+                            "postback": "Get Transactions"
+                          }
+                        ],
+                        "type": 1
+                      }
+                    ],
+                    "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+                                    {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                                  ],
+      "source": "US Bank"
+      }
+      res.send(response);
+    } else if(accountType == "checkings" && letter == "b"){
+      var response =
+      {
+      "speech": "",
+      "displayText": "",
+      "messages": [
+                      {
+                        "title": "Your Balance as of " + getDate() + " " +getTime(),
+                        "subtitle": "Checking xxx35901: $0.25",
+                        "buttons": [
+                          {
+                            "text": "Get Transactions",
+                            "postback": "Get Transactions"
+                          }
+                        ],
+                        "type": 1
+                      }
+                    ],
+                    "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+                                    {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                                  ],
+      "source": "US Bank"
+      }
+      res.send(response);
+    }else if(accountType == "savings"){
+      var response =
+      {
+      "speech": "",
+      "displayText": "",
+      "messages": [
+                       {
+                        "title": "Your Balance as of " + getDate()  + " " + getTime(),
+                        "subtitle": "Saving  xxx4321: $4,655.00",
+                        "buttons": [
+                          {
+                            "text": "Get Transactions",
+                            "postback": "Get Transactions"
+                          }
+                        ],
+                        "type": 1
+                      }
+                    ],
+                    "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+                                    {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                                  ],
+      "source": "US Bank"
+      }
+      res.send(response);
     }
-    res.send(response);
   } else {
     if(accountType == "checkings" && letter == "a"){
       var response =
@@ -471,7 +501,7 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
           "displayText": "",
           "messages": [
                           {
-                            "title": "For your checking account ending in 7174.",
+                            "title": "For your checking account ending in xxx7174.",
                             "subtitle": "What would you like to do?",
                             "buttons": [
                               {
