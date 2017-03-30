@@ -66,20 +66,20 @@ var handleWelcomeIntent = function(req, res) {
     "displayText": "",
     "messages": [
                     {
-                      "title": "How may I help you?",
-                      "subtitle": "Please type your question or choose from the below option",
+                      "title": "Hi! Welcome back to US Bank.",
+                      "subtitle": "These are the types of accounts you have with us. Which one would you like?",
                       "buttons": [
                         {
-                          "text": "Balance Check",
-                          "postback": "Balance Check"
+                          "text": "Checking",
+                          "postback": "checking"
                         },
                         {
-                          "text": "Transaction History",
-                          "postback": "Transaction History"
+                          "text": "Savings",
+                          "postback": "savings"
                         },
                         {
-                          "text": "Branch Locator",
-                          "postback": "branch"
+                          "text": "Credit Card",
+                          "postback": "credit card"
                         }
                       ],
                       "type": 1
@@ -89,23 +89,12 @@ var handleWelcomeIntent = function(req, res) {
                       "subtitle": "",
                       "buttons": [
                         {
-                          "text": "Let me Type",
-                          "postback": "Let me Type"
+                          "text": "Help",
+                          "postback": "Help"
                         }
                       ],
                       "type": 1
-                    },
-                    {
-                      "title": "Connect with Live Agent",
-                      "subtitle": "A live agent will assist you for your queries",
-                      "buttons": [
-                        {
-                          "text": "Connect Me",
-                          "postback": "Connect Me"
-                        }
-                      ],
-                      "type": 1
-                    },
+                    }
                   ],
     "contextOut": [],
     "source": "US Bank"
