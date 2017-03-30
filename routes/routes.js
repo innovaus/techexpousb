@@ -295,6 +295,7 @@ var handleTransactionHistory = function(req, res) {
   console.log(context);
   if(context!=null){
     for(var i=0;i<context.length;i++){
+      console.log(context[i].name);    
       if(context[i].name == "accounttype"){
         accountType = context[i].parameters.accountType;
       }
