@@ -177,7 +177,7 @@ var handleAccountBalance = function(req, res) {
   var parameters = req.body.result.parameters;
   if(parameters!=null){
     if(parameters.accountType!=null && parameters.accountType!=""){
-      getAccountTypeResponse(req, res, parameters.accountType);
+      getAccountSelectResponse(req, res, parameters.accountType);
       return;
     }
   }
@@ -492,7 +492,7 @@ var handleAccountSelection = function(req, res) {
     }
   }
   console.log(accountType);
-  getAccountTypeResponse(req, res, accountType);
+  getAccountSelectResponse(req, res, accountType);
 }
 // End handleAccountSelection
 
@@ -591,7 +591,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
   }
 }
 
-var getAccountTypeResponse =function (req, res, accountType) {
+var getAccountSelectResponse =function (req, res, accountType) {
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     if (accountType == 'checkings'){
        var response =
