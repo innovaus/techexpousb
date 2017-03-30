@@ -401,7 +401,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "messages": [
                       {
                         "title": "Your Balance as of " + getDate() + " " +getTime(),
-                        "subtitle": "Checking xxx35901: $0.25",
+                        "subtitle": "Checking xxx5901: $0.25",
                         "buttons": [
                           {
                             "text": "Get Transactions",
@@ -529,37 +529,6 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
           "source": "US Bank"
           }
           res.send(response);
-
-    }else if(accountType == 'savings'){
-        var response =
-            {
-            "speech": "",
-            "displayText": "",
-            "messages": [
-                            {
-                              "title": "Your Transaction History as of" + getDate() +  " " +getTime(),
-                              "subtitle": "Account No:...xxx4321:",
-                              "buttons": [
-                                {
-                                  "text": "-$3459.90 on 12/03 Macys",
-                                  "postback": "-$3459.90 on 12/03 Macys"
-                                },
-                                {
-                                  "text": "-$239.98 on 12/05 Sears",
-                                  "postback": "-$239.98 on 12/05 Sears"
-                                },
-                                {
-                                  "text": "-$2000.45 on 12/08 Transfer",
-                                  "postback": "-$2000.45 on 12/08 Transfer"
-                                }
-                              ],
-                              "type": 1
-                            }
-                          ],
-            "contextOut": [],
-            "source": "US Bank"
-            }
-            res.send(response);
     }
   } else {
     if (accountType == 'checkings'){
@@ -588,17 +557,6 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
           }
         res.send(response);
       }
-    }else if(accountType == 'savings'){
-      var response =
-        {
-        "speech":  "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Saving account ending with <say-as interpret-as=\"digits\">4321 </say-as> is - $3459.90 on <say-as interpret-as=\"date\" format=\"dm\" > 3-12 </say-as> Macys</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}],
-        "source": "US Bank"
-        }
-      res.send(response);
     }
   }
 }
@@ -666,7 +624,7 @@ var getAccountTypeResponse =function (req, res,accountType) {
         "speech": "<speak>You have 2 checking accounts: A account ending with <say-as interpret-as=\"digits\">7174</say-as> and B account ending with <say-as interpret-as=\"digits\">5901</say-as>. Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":"checkings"}}],
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}],
         "source": "US Bank"
         }
       res.send(response);
@@ -676,7 +634,7 @@ var getAccountTypeResponse =function (req, res,accountType) {
         "speech":  "<speak>Great. For your savings account ending in <say-as interpret-as=\"digits\">3813</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [],
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}],
         "source": "US Bank"
         }
       res.send(response);
