@@ -288,9 +288,11 @@ var handleAccountBalance = function(req, res) {
 
 // Start  handleTransactionHistory
 var handleTransactionHistory = function(req, res) {
+  console.log("handleTransactionHistory");
   var context =  req.body.result.contexts;
   var accountType;
   var letter;
+  console.log(context);
   if(context!=null){
     for(var i=0;i<context.length;i++){
       if(context[i].name == "accounttype"){
