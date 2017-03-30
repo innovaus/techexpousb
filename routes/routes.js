@@ -613,11 +613,11 @@ var getAccountTypeResponse =function (req, res,accountType) {
                             "subtitle": "Say the letter or the last 4 digits of the account you would like. Which account would you like?",
                             "buttons": [
                               {
-                                "text": "A account ending with 7174",
+                                "text": "Option A xxx7174",
                                 "postback": "a"
                               },
                               {
-                                "text": "B account ending with 5901",
+                                "text": "Option B xxx5901",
                                 "postback": "b"
                               }
                             ],
