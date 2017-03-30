@@ -185,7 +185,7 @@ var handleAccountBalance = function(req, res) {
   }
   console.log(accountType);
 
-  if(accountType == null){
+  if(accountType == ""){
     getAccountTypeResponse(req, res);
     return;
   }
@@ -255,7 +255,7 @@ var handleAccountBalance = function(req, res) {
         {
         "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
       "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
-        + "Checking account ending with <say-as interpret-as=\"digits\">3562 </say-as> is $0.25"
+        + "Checking account ending with <say-as interpret-as=\"digits\">5901 </say-as> is $0.25"
         + "</speak>",
         "displayText": "",
         "data": {},
@@ -302,7 +302,7 @@ var handleTransactionHistory = function(req, res) {
     }
   }
 
-  if(accountType == null){
+  if(accountType == ""){
     getAccountTypeResponse(req, res);
     return;
   }
