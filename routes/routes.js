@@ -201,7 +201,7 @@ var handleAccountBalance = function(req, res) {
     return;
   }
   // get balance response
-  getBalanceResponse(req, res);
+  getBalanceResponse(req, res,accountType,letter);
   return;
 }
 // End handleAccountBalance
@@ -631,7 +631,7 @@ var handleAccountSelection = function(req, res) {
 }
 // End handleAccountSelection
 
-var getBalanceResponse =function (req, res) {
+var getBalanceResponse =function (req, res,accountType,letter) {
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
     {
