@@ -176,7 +176,7 @@ var handleAccountBalance = function(req, res) {
   if(context!=null){
     for(var i=0;i<context.length;i++){
       if(context[i].name == "accounttype"){
-        accountType = context[i].parameters.accountType;
+        accountType = context[i].parameters.accounttype;
       }
       if(context[i].name == "accountletter"){
         letter = context[i].parameters.accountletter;
@@ -243,7 +243,7 @@ var handleAccountBalance = function(req, res) {
         + "</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":accountType}},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
                         {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
                       ],
         "source": "US Bank"
@@ -258,7 +258,7 @@ var handleAccountBalance = function(req, res) {
         + "</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":accountType}},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
                         {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
                       ],
         "source": "US Bank"
@@ -273,7 +273,7 @@ var handleAccountBalance = function(req, res) {
         + "</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":accountType}},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
                         {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
                       ],
         "source": "US Bank"
@@ -294,7 +294,7 @@ var handleTransactionHistory = function(req, res) {
   if(context!=null){
     for(var i=0;i<context.length;i++){
       if(context[i].name == "accounttype"){
-        accountType = context[i].parameters.accountType;
+        accountType = context[i].parameters.accounttype;
         console.log(accountType);
       }
       if(context[i].name == "accountletter"){
@@ -527,7 +527,7 @@ var handleAccountTypeSelectionIntent = function(req, res) {
         "speech": "<speak>You have 2 checking accounts: a account ending with <say-as interpret-as=\"digits\">7174</say-as> and b account ending with <say-as interpret-as=\"digits\">5901</say-as>. Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":"checkings"}}],
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":"checkings"}}],
         "source": "US Bank"
         }
       res.send(response);
@@ -664,7 +664,7 @@ var handleAccountSelection = function(req, res) {
           "speech": "<speak>For your checking account ending in <say-as interpret-as=\"digits\">7174</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
           "displayText": "",
           "data": {},
-          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":"checkings"}},
+          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":"checkings"}},
                           {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":"a"}}
                         ],
           "source": "US Bank"
@@ -676,7 +676,7 @@ var handleAccountSelection = function(req, res) {
           "speech": "<speak>For your checking account ending in <say-as interpret-as=\"digits\">5901</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
           "displayText": "",
           "data": {},
-          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":"checkings"}},
+          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":"checkings"}},
                           {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":"b"}}
                         ],
           "source": "US Bank"
