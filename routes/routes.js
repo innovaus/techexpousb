@@ -569,7 +569,7 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
           "speech": "<speak>For your checking account ending in <say-as interpret-as=\"digits\">7174</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
           "displayText": "",
           "data": {},
-          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":"checkings"}},
+          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
                           {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":"a"}}
                         ],
           "source": "US Bank"
@@ -581,7 +581,7 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
           "speech": "<speak>For your checking account ending in <say-as interpret-as=\"digits\">5901</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
           "displayText": "",
           "data": {},
-          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":"checkings"}},
+          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
                           {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":"b"}}
                         ],
           "source": "US Bank"
@@ -595,7 +595,7 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
     "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Saving account ending with <say-as interpret-as=\"digits\">4321 </say-as> is - $3459.90 on <say-as interpret-as=\"date\" format=\"dm\" > 3-12 </say-as> Macys</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [],
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}],
         "source": "US Bank"
         }
       res.send(response);
