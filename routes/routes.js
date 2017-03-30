@@ -165,9 +165,12 @@ var handleAccountBalance = function(req, res) {
   //read the parameters
   var parameters = req.body.result.parameters;
   if(parameters!=null){
-    if(parameters.accountType!=null && parameters.accountType!=""){
-      getAccountTypeResponse(req, res,parameters.accountType);
-      return;
+    accountType = parameters.accountType;
+    if(accountType!=null && accountType!=""){
+      if(accountType=="checkings"){
+        getAccountTypeResponse(req, res,accountType);
+        return;
+      }
     }
   }
 
