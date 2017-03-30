@@ -177,7 +177,7 @@ var handleAccountBalance = function(req, res) {
   var parameters = req.body.result.parameters;
   if(parameters!=null){
     if(parameters.accountType!=null && parameters.accountType!=""){
-      getAccountSelectResponse(req, res, parameters.accountType);
+      getAccountTypeResponse(req, res,parameters.accountType);
       return;
     }
   }
@@ -197,7 +197,7 @@ var handleAccountBalance = function(req, res) {
 
   // check for account type param
   if(accountType == ""){
-    getAccountTypeResponse(req, res);
+    getSelectAccountTypeResponse(req, res);
     return;
   }
   // get balance response
@@ -226,7 +226,7 @@ var handleTransactionHistory = function(req, res) {
   }
   //console.log(accountType);
   if(accountType == ""){
-    getAccountTypeResponse(req, res);
+    getSelectAccountTypeResponse(req, res);
     return;
   }
 
@@ -357,125 +357,7 @@ var handleTransactionHistory = function(req, res) {
 var handleAccountTypeSelectionIntent = function(req, res) {
   console.log(req.body.result.parameters.accountType);
   var accountType = req.body.result.parameters.accountType;
-  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    if (accountType == 'checkings'){
-       var response =
-          {
-          "speech": "",
-          "displayText": "",
-          "messages": [
-                          {
-                            "title": "Your Transaction History as of" + getDate() + " " +getTime(),
-                            "subtitle": "Account No:...xxx3562:",
-                            "buttons": [
-                              {
-                                "text": "-$159.90 on 12/01 Web Author",
-                                "postback": "-$159.90 on 12/01 Web Author"
-                              },
-                              {
-                                "text": "-$19.98 on 12/01 Debit Purc",
-                                "postback": "-$19.98 on 12/01 Debit Purc"
-                              },
-                              {
-                                "text": "+$856.45 on 12/02 Electronic",
-                                "postback": "+$856.45 on 12/02 Electronic"
-                              }
-                            ],
-                            "type": 1
-                          }
-                        ],
-          "contextOut": [],
-          "source": "US Bank"
-          }
-          res.send(response);
-
-    }else if(accountType == 'savings'){
-        var response =
-            {
-            "speech": "",
-            "displayText": "",
-            "messages": [
-                            {
-                              "title": "Your Transaction History as of" + getDate() +  " " +getTime(),
-                              "subtitle": "Account No:...xxx4321:",
-                              "buttons": [
-                                {
-                                  "text": "-$3459.90 on 12/03 Macys",
-                                  "postback": "-$3459.90 on 12/03 Macys"
-                                },
-                                {
-                                  "text": "-$239.98 on 12/05 Sears",
-                                  "postback": "-$239.98 on 12/05 Sears"
-                                },
-                                {
-                                  "text": "-$2000.45 on 12/08 Transfer",
-                                  "postback": "-$2000.45 on 12/08 Transfer"
-                                }
-                              ],
-                              "type": 1
-                            }
-                          ],
-            "contextOut": [],
-            "source": "US Bank"
-            }
-            res.send(response);
-    }else if(accountType == 'CD') {
-        var response =
-            {
-            "speech": "",
-            "displayText": "",
-            "messages": [
-                            {
-                              "title": "Your Transaction History as of" + getDate() +  " " +getTime(),
-                              "subtitle": "Account No:...xxx4789:",
-                              "buttons": [
-                                {
-                                  "text": "+$1,450,000.00 on 12/09  Deposit"
-                                }
-                              ],
-                              "type": 1
-                            }
-                          ],
-            "contextOut": [],
-            "source": "US Bank"
-            }
-            res.send(response);
-    }
-  } else {
-    if (accountType == 'checkings'){
-      var response =
-        {
-        "speech": "<speak>You have 2 checking accounts: a account ending with <say-as interpret-as=\"digits\">7174</say-as> and b account ending with <say-as interpret-as=\"digits\">5901</say-as>. Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":"checkings"}}],
-        "source": "US Bank"
-        }
-      res.send(response);
-    }else if(accountType == 'savings'){
-      var response =
-        {
-        "speech":  "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Saving account ending with <say-as interpret-as=\"digits\">4321 </say-as> is - $3459.90 on <say-as interpret-as=\"date\" format=\"dm\" > 3-12 </say-as> Macys</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [],
-        "source": "US Bank"
-        }
-      res.send(response);
-    }else if(accountType == 'CD') {
-      var response =
-        {
-        "speech":  "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in CD account ending with <say-as interpret-as=\"digits\">4789<\say-as> is + $1,450,000.00 on <say-as interpret-as=\"date\" format=\"dm\" > 9-12 </say-as>  Deposit</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [],
-        "source": "US Bank"
-        }
-      res.send(response);
-    }
-  }
+  getAccountTypeResponse(req, res,accountType);
 }
 // End handleAccountTypeSelectionIntent
 
@@ -492,7 +374,7 @@ var handleAccountSelection = function(req, res) {
     }
   }
   console.log(accountType);
-  getAccountSelectResponse(req, res, accountType);
+  getAccountSelectResponse(req, res, accountType, letter);
 }
 // End handleAccountSelection
 
@@ -591,7 +473,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
   }
 }
 
-var getAccountSelectResponse =function (req, res, accountType) {
+var getAccountSelectResponse =function (req, res, accountType, letter) {
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     if (accountType == 'checkings'){
        var response =
@@ -729,7 +611,129 @@ var getAccountSelectResponse =function (req, res, accountType) {
   }
 }
 
-var getAccountTypeResponse =function (req, res) {
+var getAccountTypeResponse =function (req, res,accountType) {
+  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+    if (accountType == 'checkings'){
+       var response =
+          {
+          "speech": "",
+          "displayText": "",
+          "messages": [
+                          {
+                            "title": "Your Transaction History as of" + getDate() + " " +getTime(),
+                            "subtitle": "Account No:...xxx3562:",
+                            "buttons": [
+                              {
+                                "text": "-$159.90 on 12/01 Web Author",
+                                "postback": "-$159.90 on 12/01 Web Author"
+                              },
+                              {
+                                "text": "-$19.98 on 12/01 Debit Purc",
+                                "postback": "-$19.98 on 12/01 Debit Purc"
+                              },
+                              {
+                                "text": "+$856.45 on 12/02 Electronic",
+                                "postback": "+$856.45 on 12/02 Electronic"
+                              }
+                            ],
+                            "type": 1
+                          }
+                        ],
+          "contextOut": [],
+          "source": "US Bank"
+          }
+          res.send(response);
+
+    }else if(accountType == 'savings'){
+        var response =
+            {
+            "speech": "",
+            "displayText": "",
+            "messages": [
+                            {
+                              "title": "Your Transaction History as of" + getDate() +  " " +getTime(),
+                              "subtitle": "Account No:...xxx4321:",
+                              "buttons": [
+                                {
+                                  "text": "-$3459.90 on 12/03 Macys",
+                                  "postback": "-$3459.90 on 12/03 Macys"
+                                },
+                                {
+                                  "text": "-$239.98 on 12/05 Sears",
+                                  "postback": "-$239.98 on 12/05 Sears"
+                                },
+                                {
+                                  "text": "-$2000.45 on 12/08 Transfer",
+                                  "postback": "-$2000.45 on 12/08 Transfer"
+                                }
+                              ],
+                              "type": 1
+                            }
+                          ],
+            "contextOut": [],
+            "source": "US Bank"
+            }
+            res.send(response);
+    }else if(accountType == 'CD') {
+        var response =
+            {
+            "speech": "",
+            "displayText": "",
+            "messages": [
+                            {
+                              "title": "Your Transaction History as of" + getDate() +  " " +getTime(),
+                              "subtitle": "Account No:...xxx4789:",
+                              "buttons": [
+                                {
+                                  "text": "+$1,450,000.00 on 12/09  Deposit"
+                                }
+                              ],
+                              "type": 1
+                            }
+                          ],
+            "contextOut": [],
+            "source": "US Bank"
+            }
+            res.send(response);
+    }
+  } else {
+    if (accountType == 'checkings'){
+      var response =
+        {
+        "speech": "<speak>You have 2 checking accounts: a account ending with <say-as interpret-as=\"digits\">7174</say-as> and b account ending with <say-as interpret-as=\"digits\">5901</say-as>. Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>",
+        "displayText": "",
+        "data": {},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":"checkings"}}],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }else if(accountType == 'savings'){
+      var response =
+        {
+        "speech":  "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Saving account ending with <say-as interpret-as=\"digits\">4321 </say-as> is - $3459.90 on <say-as interpret-as=\"date\" format=\"dm\" > 3-12 </say-as> Macys</speak>",
+        "displayText": "",
+        "data": {},
+        "contextOut": [],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }else if(accountType == 'CD') {
+      var response =
+        {
+        "speech":  "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in CD account ending with <say-as interpret-as=\"digits\">4789<\say-as> is + $1,450,000.00 on <say-as interpret-as=\"date\" format=\"dm\" > 9-12 </say-as>  Deposit</speak>",
+        "displayText": "",
+        "data": {},
+        "contextOut": [],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }
+  }
+}
+
+var getSelectAccountTypeResponse =function (req, res) {
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var branchResponse =
                   {
