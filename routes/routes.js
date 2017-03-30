@@ -185,11 +185,6 @@ var handleAccountBalance = function(req, res) {
   }
   console.log(accountType);
 
-  if(accountType == ""){
-    getAccountTypeResponse(req, res);
-    return;
-  }
-
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
     {
@@ -300,11 +295,6 @@ var handleTransactionHistory = function(req, res) {
         letter = context[i].parameters.accountletter;
       }
     }
-  }
-
-  if(accountType == ""){
-    getAccountTypeResponse(req, res);
-    return;
   }
 
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
