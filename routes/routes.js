@@ -287,6 +287,7 @@ var handleAccountBalance = function(req, res) {
 
 // Start  handleTransactionHistory
 var handleTransactionHistory = function(req, res) {
+  console.log("handleTransactionHistory");
   var context =  req.body.result.contexts;
   var accountType;
   var letter;
@@ -294,13 +295,15 @@ var handleTransactionHistory = function(req, res) {
     for(var i=0;i<context.length;i++){
       if(context[i].name == "accounttype"){
         accountType = context[i].parameters.accountType;
+        console.log(accountType);
       }
       if(context[i].name == "accountletter"){
         letter = context[i].parameters.accountletter;
+        console.log(letter);
       }
     }
   }
-  console.log(accountType);
+  //console.log(accountType);
   if(accountType == ""){
     getAccountTypeResponse(req, res);
     return;
