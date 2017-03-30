@@ -176,7 +176,7 @@ var handleAccountBalance = function(req, res) {
   if(context!=null){
     for(var i=0;i<context.length;i++){
       if(context[i].name == "accounttype"){
-        accountType = context[i].parameters.accounttype;
+        accountType = context[i].parameters.accountType;
       }
       if(context[i].name == "accountletter"){
         letter = context[i].parameters.accountletter;
@@ -184,6 +184,10 @@ var handleAccountBalance = function(req, res) {
     }
   }
   console.log(accountType);
+  if(accountType == ""){
+    getAccountTypeResponse(req, res);
+    return;
+  }
 
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
@@ -239,7 +243,7 @@ var handleAccountBalance = function(req, res) {
         + "</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":accountType}},
                         {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
                       ],
         "source": "US Bank"
@@ -254,7 +258,7 @@ var handleAccountBalance = function(req, res) {
         + "</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":accountType}},
                         {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
                       ],
         "source": "US Bank"
@@ -269,7 +273,7 @@ var handleAccountBalance = function(req, res) {
         + "</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":accountType}},
                         {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
                       ],
         "source": "US Bank"
@@ -289,12 +293,17 @@ var handleTransactionHistory = function(req, res) {
   if(context!=null){
     for(var i=0;i<context.length;i++){
       if(context[i].name == "accounttype"){
-        accountType = context[i].parameters.accounttype;
+        accountType = context[i].parameters.accountType;
       }
       if(context[i].name == "accountletter"){
         letter = context[i].parameters.accountletter;
       }
     }
+  }
+  console.log(accountType);
+  if(accountType == ""){
+    getAccountTypeResponse(req, res);
+    return;
   }
 
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
