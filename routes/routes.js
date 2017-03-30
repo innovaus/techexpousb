@@ -471,26 +471,24 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
           "displayText": "",
           "messages": [
                           {
-                            "title": "Your Transaction History as of" + getDate() + " " +getTime(),
-                            "subtitle": "Account No:...xxx3562:",
+                            "title": "For your checking account ending in 7174.",
+                            "subtitle": "What would you like to do?",
                             "buttons": [
                               {
-                                "text": "-$159.90 on 12/01 Web Author",
-                                "postback": "-$159.90 on 12/01 Web Author"
+                                "text": "Get Balance",
+                                "postback": "Get Balance"
                               },
                               {
-                                "text": "-$19.98 on 12/01 Debit Purc",
-                                "postback": "-$19.98 on 12/01 Debit Purc"
-                              },
-                              {
-                                "text": "+$856.45 on 12/02 Electronic",
-                                "postback": "+$856.45 on 12/02 Electronic"
+                                "text": "Get Transaction",
+                                "postback": "Get Transaction"
                               }
                             ],
                             "type": 1
                           }
                         ],
-          "contextOut": [],
+          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":"checkings"}},
+                          {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":"a"}}
+                        ],
           "source": "US Bank"
           }
           res.send(response);
