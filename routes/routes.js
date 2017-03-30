@@ -170,9 +170,20 @@ var handleLogin = function(req, res) {
 // Start handleAccountBalance
 var handleAccountBalance = function(req, res) {
   //console.log(req.body.originalRequest.source);
-  var context =  req.body.result.contexts;
   var accountType;
   var letter;
+
+  //read the parameters
+  var parameters = req.body.result.parameters;
+  if(parameters!=null){
+    if(parameters.accountType!=null && parameters.accountType!=""){
+      accountType = parameters.accountType;
+      letter = 'a';
+    }
+  }
+
+  // read the context
+  var context =  req.body.result.contexts;
   if(context!=null){
     for(var i=0;i<context.length;i++){
       if(context[i].name == "accounttype"){
@@ -183,105 +194,15 @@ var handleAccountBalance = function(req, res) {
       }
     }
   }
-  console.log(accountType);
+
+  // check for account type param
   if(accountType == ""){
     getAccountTypeResponse(req, res);
     return;
   }
-
-  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    var response =
-    {
-    "speech": "",
-    "displayText": "",
-    "messages": [
-                    {
-                      "title": "Your Balance as of " + getDate() + " " +getTime(),
-                      "subtitle": "Checking xxx3562: $15,382.57",
-                      "buttons": [
-                        {
-                          "text": "Transactions",
-                          "postback": "Transactions of Checking"
-                        }
-                      ],
-                      "type": 1
-                    },
-                     {
-                      "title": "Your Balance as of " + getDate()  + " " + getTime(),
-                      "subtitle": "Saving  xxx4321: $4,655.00",
-                      "buttons": [
-                        {
-                          "text": "Transactions",
-                          "postback": "Transactions of Saving"
-                        }
-                      ],
-                      "type": 1
-                    },
-                     {
-                      "title": "Your Balance as of " + getDate() + " " + getTime(),
-                      "subtitle": "CD xxx4789: $400,655.00",
-                      "buttons": [
-                        {
-                          "text": "Transactions",
-                          "postback": "Transactions of CD"
-                        }
-                      ],
-                      "type": 1
-                    }
-                  ],
-    "contextOut": [],
-    "source": "US Bank"
-    }
-    res.send(response);
-  } else {
-    if(accountType == "checkings" && letter == "a"){
-      var response =
-        {
-        "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-      "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
-        + "Checking account ending with <say-as interpret-as=\"digits\">7174 </say-as> is $727.41"
-        + "</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                        {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
-                      ],
-        "source": "US Bank"
-        }
-      res.send(response);
-    } else if(accountType == "checkings" && letter == "b"){
-      var response =
-        {
-        "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-      "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
-        + "Checking account ending with <say-as interpret-as=\"digits\">5901 </say-as> is $0.25"
-        + "</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                        {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
-                      ],
-        "source": "US Bank"
-        }
-      res.send(response);
-    }else if(accountType == "savings"){
-      var response =
-        {
-        "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-      "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
-        + ", Saving  account ending with <say-as interpret-as=\"digits\">4321 </say-as>is $4,655.00"
-        + "</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                        {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
-                      ],
-        "source": "US Bank"
-        }
-      res.send(response);
-    }
-
-  }
+  // get balance response
+  getBalanceResponse(req, res);
+  return;
 }
 // End handleAccountBalance
 
@@ -710,6 +631,101 @@ var handleAccountSelection = function(req, res) {
 }
 // End handleAccountSelection
 
+var getBalanceResponse =function (req, res) {
+  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+    var response =
+    {
+    "speech": "",
+    "displayText": "",
+    "messages": [
+                    {
+                      "title": "Your Balance as of " + getDate() + " " +getTime(),
+                      "subtitle": "Checking xxx3562: $15,382.57",
+                      "buttons": [
+                        {
+                          "text": "Transactions",
+                          "postback": "Transactions of Checking"
+                        }
+                      ],
+                      "type": 1
+                    },
+                     {
+                      "title": "Your Balance as of " + getDate()  + " " + getTime(),
+                      "subtitle": "Saving  xxx4321: $4,655.00",
+                      "buttons": [
+                        {
+                          "text": "Transactions",
+                          "postback": "Transactions of Saving"
+                        }
+                      ],
+                      "type": 1
+                    },
+                     {
+                      "title": "Your Balance as of " + getDate() + " " + getTime(),
+                      "subtitle": "CD xxx4789: $400,655.00",
+                      "buttons": [
+                        {
+                          "text": "Transactions",
+                          "postback": "Transactions of CD"
+                        }
+                      ],
+                      "type": 1
+                    }
+                  ],
+    "contextOut": [],
+    "source": "US Bank"
+    }
+    res.send(response);
+  } else {
+    if(accountType == "checkings" && letter == "a"){
+      var response =
+        {
+        "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+      "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
+        + "Checking account ending with <say-as interpret-as=\"digits\">7174 </say-as> is $727.41"
+        + "</speak>",
+        "displayText": "",
+        "data": {},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+                        {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                      ],
+        "source": "US Bank"
+        }
+      res.send(response);
+    } else if(accountType == "checkings" && letter == "b"){
+      var response =
+        {
+        "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+      "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
+        + "Checking account ending with <say-as interpret-as=\"digits\">5901 </say-as> is $0.25"
+        + "</speak>",
+        "displayText": "",
+        "data": {},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+                        {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                      ],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }else if(accountType == "savings"){
+      var response =
+        {
+        "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+      "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
+        + ", Saving  account ending with <say-as interpret-as=\"digits\">4321 </say-as>is $4,655.00"
+        + "</speak>",
+        "displayText": "",
+        "data": {},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+                        {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                      ],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }
+  }
+}
+
 var getAccountTypeResponse =function (req, res) {
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var branchResponse =
@@ -742,7 +758,6 @@ var getAccountTypeResponse =function (req, res) {
                   "source": "U.S Bank"
                   }
         res.send(branchResponse);
-        return;
     } else {
       var response =
         {
