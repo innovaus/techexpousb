@@ -281,34 +281,13 @@ var handleTransactionHistory = function(req, res) {
             "source": "US Bank"
             }
             res.send(response);
-    }else if(accountType == 'CD') {
-        var response =
-            {
-            "speech": "",
-            "displayText": "",
-            "messages": [
-                            {
-                              "title": "Your Transaction History as of" + getDate() +  " " +getTime(),
-                              "subtitle": "Account No:...xxx4789:",
-                              "buttons": [
-                                {
-                                  "text": "+$1,450,000.00 on 12/09  Deposit"
-                                }
-                              ],
-                              "type": 1
-                            }
-                          ],
-            "contextOut": [],
-            "source": "US Bank"
-            }
-            res.send(response);
     }
   } else {
     if (accountType == 'checkings'){
       var response =
         {
         "speech": "<speak>Your last transaction as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Checking account ending with <say-as interpret-as=\"digits\">3562 </say-as> is - $159.90 on <say-as interpret-as=\"date\" format=\"dm\" > 2-12 </say-as>  Web Author</speak>",
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Checking account ending with <say-as interpret-as=\"digits\">7174</say-as> is - $159.90 on <say-as interpret-as=\"date\" format=\"dm\" > 2-12 </say-as>  Web Author</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -319,18 +298,7 @@ var handleTransactionHistory = function(req, res) {
       var response =
         {
         "speech":  "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Saving account ending with <say-as interpret-as=\"digits\">4321 </say-as> is - $3459.90 on <say-as interpret-as=\"date\" format=\"dm\" > 3-12 </say-as> Macys</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [],
-        "source": "US Bank"
-        }
-      res.send(response);
-    }else if(accountType == 'CD') {
-      var response =
-        {
-        "speech":  "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in CD account ending with <say-as interpret-as=\"digits\">4789<\say-as> is + $1,450,000.00 on <say-as interpret-as=\"date\" format=\"dm\" > 9-12 </say-as>  Deposit</speak>",
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Saving account ending with <say-as interpret-as=\"digits\">3813</say-as> is - $45.90 on <say-as interpret-as=\"date\" format=\"dm\" > 3-12 </say-as> Macys</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
