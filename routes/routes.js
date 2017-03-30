@@ -478,7 +478,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
         {
         "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
       "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
-        + ", Saving  account ending with <say-as interpret-as=\"digits\">4321 </say-as>is $4,655.00"
+        + ", Saving  account ending with <say-as interpret-as=\"digits\">3813</say-as>is $1,017.17"
         + "</speak>",
         "displayText": "",
         "data": {},
