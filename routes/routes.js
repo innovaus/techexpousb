@@ -609,20 +609,16 @@ var getAccountTypeResponse =function (req, res,accountType) {
           "displayText": "",
           "messages": [
                           {
-                            "title": "Your Transaction History as of" + getDate() + " " +getTime(),
-                            "subtitle": "Account No:...xxx3562:",
+                            "title": "You have 2 checking accounts",
+                            "subtitle": "Say the letter or the last 4 digits of the account you would like. Which account would you like?",
                             "buttons": [
                               {
-                                "text": "-$159.90 on 12/01 Web Author",
-                                "postback": "-$159.90 on 12/01 Web Author"
+                                "text": "A account ending with 7174",
+                                "postback": "a"
                               },
                               {
-                                "text": "-$19.98 on 12/01 Debit Purc",
-                                "postback": "-$19.98 on 12/01 Debit Purc"
-                              },
-                              {
-                                "text": "+$856.45 on 12/02 Electronic",
-                                "postback": "+$856.45 on 12/02 Electronic"
+                                "text": "B account ending with 5901",
+                                "postback": "b"
                               }
                             ],
                             "type": 1
@@ -689,7 +685,7 @@ var getAccountTypeResponse =function (req, res,accountType) {
     if (accountType == 'checkings'){
       var response =
         {
-        "speech": "<speak>You have 2 checking accounts: a account ending with <say-as interpret-as=\"digits\">7174</say-as> and b account ending with <say-as interpret-as=\"digits\">5901</say-as>. Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>",
+        "speech": "<speak>You have 2 checking accounts: A account ending with <say-as interpret-as=\"digits\">7174</say-as> and B account ending with <say-as interpret-as=\"digits\">5901</say-as>. Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":"checkings"}}],
