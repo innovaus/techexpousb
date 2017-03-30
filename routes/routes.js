@@ -244,7 +244,7 @@ var handleAccountBalance = function(req, res) {
         + "</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":accountType}},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
                         {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
                       ],
         "source": "US Bank"
@@ -259,7 +259,7 @@ var handleAccountBalance = function(req, res) {
         + "</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":accountType}},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
                         {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
                       ],
         "source": "US Bank"
@@ -274,7 +274,7 @@ var handleAccountBalance = function(req, res) {
         + "</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accountType":accountType}},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
                         {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
                       ],
         "source": "US Bank"
