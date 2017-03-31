@@ -180,8 +180,6 @@ var handleAccountBalance = function(req, res) {
     for(var i=0;i<context.length;i++){
       if(context[i].name == "accounttype"){
         accountType = context[i].parameters.accounttype;
-        console.log("accountType");
-        console.log(accountType);
       }
       if(context[i].name == "accountletter"){
         letter = context[i].parameters.accountletter;
@@ -341,8 +339,6 @@ var handleAccountSelection = function(req, res) {
 // End handleAccountSelection
 
 var getBalanceResponse =function (req, res,accountType,letter) {
-  console.log(accountType);
-  console.log("getBalanceResponse");
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     if(accountType == "checkings" && letter == "a"){
       var response =
@@ -415,7 +411,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "source": "US Bank"
       }
       res.send(response);
-    } else if(accountType == 'Credit Card'){
+    } else if(accountType == "Credit Card"){
       var response =
       {
       "speech": "",
@@ -441,6 +437,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
                                   ],
       "source": "US Bank"
       }
+      res.send(response);
     }
   } else {
     if(accountType == "checkings" && letter == "a"){
@@ -487,7 +484,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
         "source": "US Bank"
         }
       res.send(response);
-    }else if(accountType == 'Credit Card'){
+    }else if(accountType == "Credit Card"){
       var response =
         {
         "speech": "<speak>The current balance for your credit card account ending in <say-as interpret-as=\"digits\">4571</say-as> is $6,918.64, and you have $40,081.36 of available credit. This balance does not reflect pending transactions. Now, you can review transactions or get due dates for your next payment. What would you like to do next?  </speak>",
@@ -497,6 +494,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
                       ],
         "source": "US Bank"
         }
+        res.send(response);
     }
   }
 }
