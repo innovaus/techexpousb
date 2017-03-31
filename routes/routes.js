@@ -610,6 +610,17 @@ var getAccountTypeResponse =function (req, res,accountType) {
         }
       res.send(response);
     }
+    else if(accountType == 'Credit Card'){
+      var response =
+        {
+        "speech":  "<speak>Great. For your credit card account ending in <say-as interpret-as=\"digits\">4571</say-as>, you can say get balance, get due date, or review transactions. What would you like to do?</speak>",
+        "displayText": "",
+        "data": {},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }
   }
 }
 
