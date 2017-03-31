@@ -180,6 +180,8 @@ var handleAccountBalance = function(req, res) {
     for(var i=0;i<context.length;i++){
       if(context[i].name == "accounttype"){
         accountType = context[i].parameters.accounttype;
+        console.log("accountType");
+        console.log(accountType);
       }
       if(context[i].name == "accountletter"){
         letter = context[i].parameters.accountletter;
@@ -339,6 +341,8 @@ var handleAccountSelection = function(req, res) {
 // End handleAccountSelection
 
 var getBalanceResponse =function (req, res,accountType,letter) {
+  console.log(accountType);
+  console.log("getBalanceResponse");
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     if(accountType == "checkings" && letter == "a"){
       var response =
