@@ -594,7 +594,7 @@ var getAccountTypeResponse =function (req, res,accountType) {
           "displayText": "",
           "messages": [
                           {
-                            "title": "For your savings account ending in xxx4571, you can select below options.",
+                            "title": "For your credit card account ending in xxx4571",
                             "subtitle": "What would you like to do?",
                             "buttons": [
                               {
