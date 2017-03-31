@@ -371,7 +371,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "displayText": "",
       "messages": [
                       {
-                        "title": "Checking xxx5901: $0.25",
+                        "title": "Checking xxx5901 balance is $0.25",
                         "subtitle": "Your Balance as of " + getDate() + " " +getTime(),
                         "buttons": [
                           {
@@ -395,7 +395,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "displayText": "",
       "messages": [
                        {
-                        "title": "Saving  xxx3813: $1,017.17",
+                        "title": "Saving  xxx3813 balance is $1,017.17",
                         "subtitle": "Your Balance as of " + getDate()  + " " + getTime(),
                         "buttons": [
                           {
@@ -418,8 +418,8 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "displayText": "",
       "messages": [
                        {
-                        "title": "Credit card xxx4571: $6,918.64, and you have $40,081.36 of available credit.",
-                        "subtitle": "Now, you can review transactions or get due dates for your next payment. What would you like to do next?",
+                        "title": "Credit card xxx4571 balance is $6,918.64, and you have $40,081.36 of available credit.",
+                        "subtitle": "What would you like to do next?",
                         "buttons": [
                           {
                             "text": "Get Transactions",
