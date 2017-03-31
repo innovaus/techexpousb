@@ -347,8 +347,8 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "displayText": "",
       "messages": [
                       {
-                        "title": "Your Balance as of " + getDate() + " " +getTime(),
-                        "subtitle": "Checking xxx7174: $727.41",
+                        "title": "Checking xxx7174: $727.41",
+                        "subtitle": "Your Balance as of " + getDate() + " " +getTime(),
                         "buttons": [
                           {
                             "text": "Get Transactions",
@@ -371,8 +371,8 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "displayText": "",
       "messages": [
                       {
-                        "title": "Your Balance as of " + getDate() + " " +getTime(),
-                        "subtitle": "Checking xxx5901: $0.25",
+                        "title": "Checking xxx5901: $0.25",
+                        "subtitle": "Your Balance as of " + getDate() + " " +getTime(),
                         "buttons": [
                           {
                             "text": "Get Transactions",
@@ -395,8 +395,8 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "displayText": "",
       "messages": [
                        {
-                        "title": "Your Balance as of " + getDate()  + " " + getTime(),
-                        "subtitle": "Saving  xxx3813: $1,017.17",
+                        "title": "Saving  xxx3813: $1,017.17",
+                        "subtitle": "Your Balance as of " + getDate()  + " " + getTime(),
                         "buttons": [
                           {
                             "text": "Get Transactions",
@@ -542,14 +542,14 @@ var getAccountTypeResponse =function (req, res,accountType) {
           "messages": [
                           {
                             "title": "You have 2 checking accounts",
-                            "subtitle": "Say the letter or the last 4 digits of the account you would like. Which account would you like?",
+                            "subtitle": "Which account would you like?",
                             "buttons": [
                               {
-                                "text": "Option A xxx7174",
+                                "text": "Checking account xxx7174",
                                 "postback": "a"
                               },
                               {
-                                "text": "Option B xxx5901",
+                                "text": "Checking account xxx5901",
                                 "postback": "b"
                               }
                             ],
