@@ -406,12 +406,37 @@ var getBalanceResponse =function (req, res,accountType,letter) {
                         "type": 1
                       }
                     ],
-                    "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                                    {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                    "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}
                                   ],
       "source": "US Bank"
       }
       res.send(response);
+    } else if(accountType == 'Credit Card'){
+      var response =
+      {
+      "speech": "",
+      "displayText": "",
+      "messages": [
+                       {
+                        "title": "Credit card xxx4571: $6,918.64, and you have $40,081.36 of available credit.",
+                        "subtitle": "Now, you can review transactions or get due dates for your next payment. What would you like to do next?",
+                        "buttons": [
+                          {
+                            "text": "Get Transactions",
+                            "postback": "Get Transactions"
+                          },
+                          {
+                            "text": "Get Due Date",
+                            "postback": "Get Due Date"
+                          }
+                        ],
+                        "type": 1
+                      }
+                    ],
+                    "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}
+                                  ],
+      "source": "US Bank"
+      }
     }
   } else {
     if(accountType == "checkings" && letter == "a"){
@@ -453,12 +478,21 @@ var getBalanceResponse =function (req, res,accountType,letter) {
         + "</speak>",
         "displayText": "",
         "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                        {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}
                       ],
         "source": "US Bank"
         }
       res.send(response);
+    }else if(accountType == 'Credit Card'){
+      var response =
+        {
+        "speech": "<speak>The current balance for your credit card account ending in <say-as interpret-as=\"digits\">4571</say-as> is $6,918.64, and you have $40,081.36 of available credit. This balance does not reflect pending transactions. Now, you can review transactions or get due dates for your next payment. What would you like to do next?  </speak>",
+        "displayText": "",
+        "data": {},
+        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}
+                      ],
+        "source": "US Bank"
+        }
     }
   }
 }
