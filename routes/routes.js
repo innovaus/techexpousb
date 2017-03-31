@@ -587,6 +587,36 @@ var getAccountTypeResponse =function (req, res,accountType) {
             "source": "US Bank"
             }
             res.send(response);
+    } else if(accountType == 'Credit Card'){
+      var response =
+          {
+          "speech": "",
+          "displayText": "",
+          "messages": [
+                          {
+                            "title": "For your savings account ending in xxx4571, you can select below options.",
+                            "subtitle": "What would you like to do?",
+                            "buttons": [
+                              {
+                                "text": "Get Balance",
+                                "postback": "Get Balance"
+                              },
+                              {
+                                "text": "Get Transaction",
+                                "postback": "Get Transaction"
+                              },
+                              {
+                                "text": "Get Due Date",
+                                "postback": "Get Due Date"
+                              }
+                            ],
+                            "type": 1
+                          }
+                        ],
+          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}],
+          "source": "US Bank"
+          }
+          res.send(response);
     }
   } else {
     if (accountType == 'checkings'){
