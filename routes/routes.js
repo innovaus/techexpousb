@@ -133,6 +133,7 @@ app.post("/branchlocator", function(req, res) {
 });
 // handle welcome intent
 var handleWelcomeIntent = function(req, res) {
+  constructWelcomeString();
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
     {
