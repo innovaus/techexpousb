@@ -54,7 +54,7 @@ var appRouter = function(app) {
   function account_count(type){
     var count = 0;
     for(var i=0;i<accountResponse.accounts.length;i++){
-      if(accountResponse.accounts.accounttype == type){
+      if(accountResponse.accounts[i].accounttype == type){
         count++;
       }
     }
@@ -97,8 +97,8 @@ var appRouter = function(app) {
     console.log(count);
     if(count == 1){
       for(var i=0;i<accountResponse.accounts.length;i++){
-        if(accountResponse.accounts.accounttype == accountType){
-          GOOGLE_ACC_TYPE_MESSAGE = "<speak>Great. For your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts.accountNumber+"</say-as>, you can say "+accountResponse.accounts.action.toString()+". What would you like to do?</speak>";
+        if(accountResponse.accounts[i].accounttype == accountType){
+          GOOGLE_ACC_TYPE_MESSAGE = "<speak>Great. For your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>, you can say "+accountResponse.accounts[i].action.toString()+". What would you like to do?</speak>";
         }
       }
     } else if(count > 1){
@@ -107,9 +107,9 @@ var appRouter = function(app) {
       FB_ACC_TYPE_SUB_TITLE = "Which account would you like?";
 
       for(var i=0;i<accountResponse.accounts.length;i++){
-        if(accountResponse.accounts.accounttype == accountType){
-          GOOGLE_ACC_TYPE_MESSAGE = GOOGLE_ACC_TYPE_MESSAGE +" "+ACC_TYPE_OPTION[i]+" account ending with <say-as interpret-as=\"digits\">"+accountResponse.accounts.accountNumber+"</say-as>.";
-          var button = {"text": "xxx"+accountResponse.accounts.accountNumber+" "+accountType,"postback": ACC_TYPE_OPTION[i]};
+        if(accountResponse.accounts[i].accounttype == accountType){
+          GOOGLE_ACC_TYPE_MESSAGE = GOOGLE_ACC_TYPE_MESSAGE +" "+ACC_TYPE_OPTION[i]+" account ending with <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>.";
+          var button = {"text": "xxx"+accountResponse.accounts[i].accountNumber+" "+accountType,"postback": ACC_TYPE_OPTION[i]};
           FB_ACC_TYPE_BUTTON.push(button);
         }
       }
