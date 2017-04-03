@@ -95,7 +95,7 @@ var appRouter = function(app) {
     if(count == 1){
       for(var i=0;i<accountResponse.accounts.length;i++){
         if(accountResponse.accounts.accounttype == accountType){
-          GOOGLE_ACC_TYPE_MESSAGE = "<speak>Great. For your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts.accountNumber+"</say-as>, you can say "+accountResponse.accounts.action..toString()+". What would you like to do?</speak>";
+          GOOGLE_ACC_TYPE_MESSAGE = "<speak>Great. For your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts.accountNumber+"</say-as>, you can say "+accountResponse.accounts.action.toString()+". What would you like to do?</speak>";
         }
       }
     } else if(count > 1){
