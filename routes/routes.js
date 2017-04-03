@@ -9,6 +9,7 @@ var appRouter = function(app) {
         "accounttype": "checking",
         "accountNumber": "7174",
         "balance": "727.41",
+        "option": "a",
         "action": [
           "Get Balance",
           "Get Transaction"
@@ -19,6 +20,7 @@ var appRouter = function(app) {
         "accounttype": "checking",
         "accountNumber": "5901",
         "balance": "0.25",
+        "option": "b",
         "action": [
           "Get Balance",
           "Get Transaction"
@@ -575,7 +577,59 @@ var getBalanceResponse =function (req, res,accountType,letter) {
 }
 
 var getAccountSelectResponse =function (req, res, accountType, letter) {
+  // account selection
+  var GOOGLE_ACC_SELECT_MESSAGE;
+  var FB_ACC_SELECT_TITLE;
+  var FB_ACC_SELECT_SUB_TITLE;
+  var FB_ACC_SELECT_BUTTON=[];
+
+  for(var i=0;i<accountResponse.accounts.length;i++){
+    if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
+      GOOGLE_ACC_SELECT_MESSAGE = "<speak>Great. For your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>, you can say "+accountResponse.accounts[i].action.toString()+". What would you like to do?</speak>";
+      FB_ACC_SELECT_TITLE = "For your "+accountType+" account ending in xxx"+accountResponse.accounts[i].accountNumber;
+      FB_ACC_SELECT_SUB_TITLE = "What would you like to do?";
+      // add actions
+      for(var j=0;j<accountResponse.accounts[i].action.length;j++){
+        var button = {"text": accountResponse.accounts[i].action[j],"postback": accountResponse.accounts[i].action[j]};
+        FB_ACC_SELECT_BUTTON.push(button);
+      }
+    }
+  }
+
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+    var response =
+       {
+       "speech": "",
+       "displayText": "",
+       "messages": [
+                       {
+                         "title": FB_ACC_SELECT_TITLE,
+                         "subtitle": FB_ACC_SELECT_SUB_TITLE,
+                         "buttons": FB_ACC_SELECT_BUTTON,
+                         "type": 1
+                       }
+                     ],
+      "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+                     {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                   ],
+       "source": "US Bank"
+       }
+       res.send(response);
+  } else {
+    var response =
+      {
+      "speech": GOOGLE_ACC_SELECT_MESSAGE,
+      "displayText": "",
+      "data": {},
+      "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+                      {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                    ],
+      "source": "US Bank"
+      }
+    res.send(response);
+  }
+
+  /*if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     if (accountType == 'checkings'){
       var title;
       if(letter == "a"){
@@ -640,13 +694,12 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
         res.send(response);
       }
     }
-  }
+  }*/
 }
 
 var getAccountTypeResponse =function (req, res,accountType) {
 
   // account type selection
-  var ACC_TYPE_OPTION=['A','B','C','D','E','F'];
   var GOOGLE_ACC_TYPE_MESSAGE;
   var FB_ACC_TYPE_TITLE;
   var FB_ACC_TYPE_SUB_TITLE;
@@ -659,7 +712,7 @@ var getAccountTypeResponse =function (req, res,accountType) {
       if(accountResponse.accounts[i].accounttype == accountType){
         GOOGLE_ACC_TYPE_MESSAGE = "<speak>Great. For your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>, you can say "+accountResponse.accounts[i].action.toString()+". What would you like to do?</speak>";
         FB_ACC_TYPE_TITLE = "For your "+accountType+" account ending in xxx"+accountResponse.accounts[i].accountNumber;
-        FB_ACC_TYPE_SUB_TITLE = "Which account would you like?";
+        FB_ACC_TYPE_SUB_TITLE = "What would you like to do?";
         // add actions
         for(var j=0;j<accountResponse.accounts[i].action.length;j++){
           var button = {"text": accountResponse.accounts[i].action[j],"postback": accountResponse.accounts[i].action[j]};
@@ -670,12 +723,12 @@ var getAccountTypeResponse =function (req, res,accountType) {
   } else if(count > 1){
     GOOGLE_ACC_TYPE_MESSAGE = "<speak>You have "+count+" "+accountType+" accounts:";
     FB_ACC_TYPE_TITLE = "You have "+count+" "+accountType+" accounts";
-    FB_ACC_TYPE_SUB_TITLE = "Which account would you like?";
+    FB_ACC_TYPE_SUB_TITLE = "What would you like to do?";
 
     for(var i=0;i<accountResponse.accounts.length;i++){
       if(accountResponse.accounts[i].accounttype == accountType){
-        GOOGLE_ACC_TYPE_MESSAGE = GOOGLE_ACC_TYPE_MESSAGE +" "+ACC_TYPE_OPTION[i]+" account ending with <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>.";
-        var button = {"text": "xxx"+accountResponse.accounts[i].accountNumber+" "+accountType,"postback": ACC_TYPE_OPTION[i]};
+        GOOGLE_ACC_TYPE_MESSAGE = GOOGLE_ACC_TYPE_MESSAGE +" "+accountResponse.accounts[i].option+" account ending with <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>.";
+        var button = {"text": "xxx"+accountResponse.accounts[i].accountNumber+" "+accountType,"postback": accountResponse.accounts[i].option};
         FB_ACC_TYPE_BUTTON.push(button);
       }
     }
