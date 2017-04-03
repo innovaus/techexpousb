@@ -91,10 +91,8 @@ var appRouter = function(app) {
   }
 
   var creatAccTypeMessage = function(accountType) {
-    console.log("creatAccTypeMessage");
-    console.log(accountType);
     var count = account_count(accountType);
-    console.log(count);
+
     if(count == 1){
       for(var i=0;i<accountResponse.accounts.length;i++){
         if(accountResponse.accounts[i].accounttype == accountType){
@@ -115,7 +113,9 @@ var appRouter = function(app) {
       }
       GOOGLE_ACC_TYPE_MESSAGE = GOOGLE_ACC_TYPE_MESSAGE + "Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>";
     }
-    console.log(GOOGLE_ACC_TYPE_MESSAGE);
+    console.log(FB_ACC_TYPE_TITLE);
+    console.log(FB_ACC_TYPE_SUB_TITLE);
+    console.log(FB_ACC_TYPE_BUTTON.toString());
   }
 
   app.get("/", function(req, res) {
