@@ -51,6 +51,15 @@ var appRouter = function(app) {
       }
       return out;
   }
+  function account_count(type){
+    var count = 0;
+    for(var i=0;i<accountResponse.accounts.length;i++){
+      if(accountResponse.accounts.accounttype == type){
+        count++;
+      }
+    }
+    return count;
+  }
   // unique account types
   var accountTypes= [];
   // welcome message strings
@@ -58,20 +67,50 @@ var appRouter = function(app) {
   var FB_WELCOME_TITLE;
   var FB_WELCOME_SUB_TITLE;
   var FB_WELCOME_BUTTON=[];
+  // account type selection
+  var ACC_TYPE_OPTION=['A','B','C','D','E','F'];
+  var GOOGLE_ACC_TYPE_MESSAGE;
+  var FB_ACC_TYPE_TITLE;
+  var FB_ACC_TYPE_SUB_TITLE;
+  var FB_ACC_TYPE_BUTTON=[];
 
-  var constructWelcomeString = function() {
+  var creatWelcomeMessage = function() {
     for(var i=0;i<accountResponse.accounts.length;i++){
       accountTypes.push(accountResponse.accounts[i].accounttype);
     }
     accountTypes=uniq_fast(accountTypes);
 
-    GOOGLE_WELCOME_MESSAGE = "<speak>Hi! Welcome back to US Bank. These are the types of accounts you have with us: "+accountTypes.toString()+", Which one would you like? Or, for more options, say help.</speak>";
-    FB_WELCOME_TITLE = "Hi! Welcome back to US Bank.";
+    GOOGLE_WELCOME_MESSAGE = "<speak>Great! Now you can access your accounts. These are the types of accounts you have with us: "+accountTypes.toString()+", Which one would you like? Or, for more options, say help.</speak>";
+    FB_WELCOME_TITLE = "Great! Now you can access your accounts.";
     FB_WELCOME_SUB_TITLE = "These are the types of accounts you have with us. Which one would you like?";
 
     for(var i=0;i<accountTypes.length;i++){
       var button = {"text": accountTypes[i],"postback": accountTypes[i]};
       FB_WELCOME_BUTTON.push(button);
+    }
+  }
+
+  var creatAccTypeMessage = function(accountType) {
+    var count = account_count(accountType);
+    if(count == 1){
+      for(var i=0;i<accountResponse.accounts.length;i++){
+        if(accountResponse.accounts.accounttype == accountType){
+          GOOGLE_ACC_TYPE_MESSAGE = "<speak>Great. For your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts.accountNumber+"</say-as>, you can say "+accountResponse.accounts.action..toString()+". What would you like to do?</speak>";
+        }
+      }
+    } else if(count > 1){
+      GOOGLE_ACC_TYPE_MESSAGE = "<speak>You have "+count+" "+accountType+" accounts:";
+      FB_ACC_TYPE_TITLE = "You have "+count+" "+accountType+" accounts";
+      FB_ACC_TYPE_SUB_TITLE = "Which account would you like?";
+
+      for(var i=0;i<accountResponse.accounts.length;i++){
+        if(accountResponse.accounts.accounttype == accountType){
+          GOOGLE_ACC_TYPE_MESSAGE = GOOGLE_ACC_TYPE_MESSAGE +" "+ACC_TYPE_OPTION[i]+" account ending with <say-as interpret-as=\"digits\">"+accountResponse.accounts.accountNumber+"</say-as>.";
+          var button = {"text": "xxx"+accountResponse.accounts.accountNumber+" "+accountType,"postback": ACC_TYPE_OPTION[i]};
+          FB_ACC_TYPE_BUTTON.push(button);
+        }
+      }
+      GOOGLE_ACC_TYPE_MESSAGE = GOOGLE_ACC_TYPE_MESSAGE + "Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>";
     }
   }
 
@@ -133,7 +172,7 @@ app.post("/branchlocator", function(req, res) {
 });
 // handle welcome intent
 var handleWelcomeIntent = function(req, res) {
-  constructWelcomeString();
+  creatWelcomeMessage();
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
     {
@@ -165,7 +204,6 @@ var handleWelcomeIntent = function(req, res) {
   } else {
     var response =
       {
-      //"speech": "<speak>Hi! Welcome back to US Bank. These are the types of accounts you have with us: checking, savings, credit, Which one would you like? Or, for more options, say help.</speak>",
       "speech":GOOGLE_WELCOME_MESSAGE,
       "displayText": "",
       "data": {},
@@ -632,26 +670,35 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
 }
 
 var getAccountTypeResponse =function (req, res,accountType) {
+  creatAccTypeMessage(accountType);
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    if (accountType == 'checkings'){
+    var response =
+       {
+       "speech": "",
+       "displayText": "",
+       "messages": [
+                       {
+                         "title": FB_ACC_TYPE_TITLE,
+                         "subtitle": FB_ACC_TYPE_SUB_TITLE,
+                         "buttons": FB_ACC_TYPE_BUTTON,
+                         "type": 1
+                       }
+                     ],
+       "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}],
+       "source": "US Bank"
+       }
+       res.send(response);
+
+    /*if (accountType == 'checkings'){
        var response =
           {
           "speech": "",
           "displayText": "",
           "messages": [
                           {
-                            "title": "You have 2 checking accounts",
-                            "subtitle": "Which account would you like?",
-                            "buttons": [
-                              {
-                                "text": "xxx7174 Checking",
-                                "postback": "a"
-                              },
-                              {
-                                "text": "xxx5901 Checking",
-                                "postback": "b"
-                              }
-                            ],
+                            "title": FB_ACC_TYPE_TITLE,
+                            "subtitle": FB_ACC_TYPE_SUB_TITLE,
+                            "buttons": FB_ACC_TYPE_BUTTON,
                             "type": 1
                           }
                         ],
@@ -716,12 +763,21 @@ var getAccountTypeResponse =function (req, res,accountType) {
           "source": "US Bank"
           }
           res.send(response);
-    }
+    }*/
   } else {
-    if (accountType == 'checkings'){
+    var response =
+      {
+      "speech": GOOGLE_ACC_TYPE_MESSAGE,
+      "displayText": "",
+      "data": {},
+      "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}],
+      "source": "US Bank"
+      }
+    res.send(response);
+    /*if (accountType == 'checkings'){
       var response =
         {
-        "speech": "<speak>You have 2 checking accounts: A account ending with <say-as interpret-as=\"digits\">7174</say-as> and B account ending with <say-as interpret-as=\"digits\">5901</say-as>. Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>",
+        "speech": GOOGLE_ACC_TYPE_MESSAGE,
         "displayText": "",
         "data": {},
         "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}],
@@ -731,7 +787,7 @@ var getAccountTypeResponse =function (req, res,accountType) {
     }else if(accountType == 'savings'){
       var response =
         {
-        "speech":  "<speak>Great. For your savings account ending in <say-as interpret-as=\"digits\">3813</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
+        "speech":  ,
         "displayText": "",
         "data": {},
         "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}],
@@ -749,7 +805,7 @@ var getAccountTypeResponse =function (req, res,accountType) {
         "source": "US Bank"
         }
       res.send(response);
-    }
+    }*/
   }
 }
 
