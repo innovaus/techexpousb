@@ -113,9 +113,6 @@ var appRouter = function(app) {
       }
       GOOGLE_ACC_TYPE_MESSAGE = GOOGLE_ACC_TYPE_MESSAGE + "Say the letter or the last 4 digits of the account you would like. Which account would you like?</speak>";
     }
-    console.log(FB_ACC_TYPE_TITLE);
-    console.log(FB_ACC_TYPE_SUB_TITLE);
-    console.log(FB_ACC_TYPE_BUTTON.toString());
   }
 
   app.get("/", function(req, res) {
