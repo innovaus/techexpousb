@@ -60,35 +60,13 @@ var appRouter = function(app) {
     }
     return count;
   }
-  // unique account types
-  var accountTypes= [];
-  // welcome message strings
-  var GOOGLE_WELCOME_MESSAGE;
-  var FB_WELCOME_TITLE;
-  var FB_WELCOME_SUB_TITLE;
-  var FB_WELCOME_BUTTON=[];
+
   // account type selection
   var ACC_TYPE_OPTION=['A','B','C','D','E','F'];
   var GOOGLE_ACC_TYPE_MESSAGE;
   var FB_ACC_TYPE_TITLE;
   var FB_ACC_TYPE_SUB_TITLE;
   var FB_ACC_TYPE_BUTTON=[];
-
-  var creatWelcomeMessage = function() {
-    for(var i=0;i<accountResponse.accounts.length;i++){
-      accountTypes.push(accountResponse.accounts[i].accounttype);
-    }
-    accountTypes=uniq_fast(accountTypes);
-
-    GOOGLE_WELCOME_MESSAGE = "<speak>Great! Now you can access your accounts. These are the types of accounts you have with us: "+accountTypes.toString()+", Which one would you like? Or, for more options, say help.</speak>";
-    FB_WELCOME_TITLE = "Great! Now you can access your accounts.";
-    FB_WELCOME_SUB_TITLE = "These are the types of accounts you have with us. Which one would you like?";
-
-    for(var i=0;i<accountTypes.length;i++){
-      var button = {"text": accountTypes[i],"postback": accountTypes[i]};
-      FB_WELCOME_BUTTON.push(button);
-    }
-  }
 
   var creatAccTypeMessage = function(accountType) {
     var count = account_count(accountType);
@@ -180,7 +158,28 @@ app.post("/branchlocator", function(req, res) {
 });
 // handle welcome intent
 var handleWelcomeIntent = function(req, res) {
-  creatWelcomeMessage();
+  // welcome message strings
+  var GOOGLE_WELCOME_MESSAGE;
+  var FB_WELCOME_TITLE;
+  var FB_WELCOME_SUB_TITLE;
+  var FB_WELCOME_BUTTON=[];
+  // unique account types
+  var accountTypes= [];
+  
+  for(var i=0;i<accountResponse.accounts.length;i++){
+    accountTypes.push(accountResponse.accounts[i].accounttype);
+  }
+  accountTypes=uniq_fast(accountTypes);
+
+  GOOGLE_WELCOME_MESSAGE = "<speak>Great! Now you can access your accounts. These are the types of accounts you have with us: "+accountTypes.toString()+", Which one would you like? Or, for more options, say help.</speak>";
+  FB_WELCOME_TITLE = "Great! Now you can access your accounts.";
+  FB_WELCOME_SUB_TITLE = "These are the types of accounts you have with us. Which one would you like?";
+
+  for(var i=0;i<accountTypes.length;i++){
+    var button = {"text": accountTypes[i],"postback": accountTypes[i]};
+    FB_WELCOME_BUTTON.push(button);
+  }
+
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
     {
