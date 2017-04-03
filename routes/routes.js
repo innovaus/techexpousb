@@ -91,6 +91,8 @@ var appRouter = function(app) {
   }
 
   var creatAccTypeMessage = function(accountType) {
+    console.log("creatAccTypeMessage");
+    console.log(accountType);
     var count = account_count(accountType);
     console.log(count);
     if(count == 1){
