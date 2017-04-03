@@ -581,11 +581,11 @@ var getAccountTypeResponse =function (req, res,accountType) {
                             "subtitle": "Which account would you like?",
                             "buttons": [
                               {
-                                "text": "Checking account xxx7174",
+                                "text": "xxx7174 Checking",
                                 "postback": "a"
                               },
                               {
-                                "text": "Checking account xxx5901",
+                                "text": "xxx5901 Checking",
                                 "postback": "b"
                               }
                             ],
