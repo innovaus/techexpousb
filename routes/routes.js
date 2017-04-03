@@ -1,6 +1,80 @@
 var appRouter = function(app) {
 
   var https = require('https');
+
+  // response JSON
+  var accountResponse = {
+    "accounts": [
+      {
+        "accounttype": "checking",
+        "accountNumber": "7174",
+        "balance": "727.41",
+        "action": [
+          "Get Balance",
+          "Get Transaction"
+        ],
+        "transaction": []
+      },
+      {
+        "accounttype": "checking",
+        "accountNumber": "5901",
+        "balance": "0.25",
+        "action": [
+          "Get Balance",
+          "Get Transaction"
+        ],
+        "transaction": []
+      },
+      {
+        "accounttype": "savings",
+        "accountNumber": "3813",
+        "balance": "1,017.17",
+        "action": [
+          "Get Balance",
+          "Get Transaction"
+        ],
+        "transaction": []
+      }
+    ]
+  };
+  function uniq_fast(a) {
+      var seen = {};
+      var out = [];
+      var len = a.length;
+      var j = 0;
+      for(var i = 0; i < len; i++) {
+           var item = a[i];
+           if(seen[item] !== 1) {
+                 seen[item] = 1;
+                 out[j++] = item;
+           }
+      }
+      return out;
+  }
+  // unique account types
+  var accountTypes= [];
+  // welcome message strings
+  var GOOGLE_WELCOME_MESSAGE;
+  var FB_WELCOME_TITLE;
+  var FB_WELCOME_SUB_TITLE;
+  var FB_WELCOME_BUTTON=[];
+
+  var constructWelcomeString = function() {
+    for(var i=0;i<accountResponse.accounts.length;i++){
+      accountTypes.push(accountResponse.accounts[i].accounttype);
+    }
+    accountTypes=uniq_fast(accountTypes);
+
+    GOOGLE_WELCOME_MESSAGE = "<speak>Hi! Welcome back to US Bank. These are the types of accounts you have with us: "+accountTypes.toString()+", Which one would you like? Or, for more options, say help.</speak>";
+    FB_WELCOME_TITLE = "Hi! Welcome back to US Bank.";
+    FB_WELCOME_SUB_TITLE = "These are the types of accounts you have with us. Which one would you like?";
+
+    for(var i=0;i<accountTypes.length;i++){
+      var button = {"text": accountTypes[i],"postback": accountTypes[i]};
+      FB_WELCOME_BUTTON.push(button);
+    }
+  }
+
   app.get("/", function(req, res) {
       res.send("Hello World");
   });
@@ -66,22 +140,9 @@ var handleWelcomeIntent = function(req, res) {
     "displayText": "",
     "messages": [
                     {
-                      "title": "Hi! Welcome back to US Bank.",
-                      "subtitle": "These are the types of accounts you have with us. Which one would you like?",
-                      "buttons": [
-                        {
-                          "text": "Checking",
-                          "postback": "checking"
-                        },
-                        {
-                          "text": "Savings",
-                          "postback": "savings"
-                        },
-                        {
-                          "text": "Credit Card",
-                          "postback": "credit card"
-                        }
-                      ],
+                      "title": FB_WELCOME_TITLE,
+                      "subtitle": FB_WELCOME_SUB_TITLE,
+                      "buttons": FB_WELCOME_BUTTON,
                       "type": 1
                     },
                     {
@@ -103,7 +164,8 @@ var handleWelcomeIntent = function(req, res) {
   } else {
     var response =
       {
-      "speech": "<speak>Hi! Welcome back to US Bank. These are the types of accounts you have with us: checking, savings, credit, Which one would you like? Or, for more options, say help.</speak>",
+      //"speech": "<speak>Hi! Welcome back to US Bank. These are the types of accounts you have with us: checking, savings, credit, Which one would you like? Or, for more options, say help.</speak>",
+      "speech":GOOGLE_WELCOME_MESSAGE,
       "displayText": "",
       "data": {},
       "contextOut": [],
