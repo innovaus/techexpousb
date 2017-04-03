@@ -97,6 +97,13 @@ var appRouter = function(app) {
       for(var i=0;i<accountResponse.accounts.length;i++){
         if(accountResponse.accounts[i].accounttype == accountType){
           GOOGLE_ACC_TYPE_MESSAGE = "<speak>Great. For your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>, you can say "+accountResponse.accounts[i].action.toString()+". What would you like to do?</speak>";
+          FB_ACC_TYPE_TITLE = "For your "+accountType+" account ending in xxx"+accountResponse.accounts[i].accountNumber;
+          FB_ACC_TYPE_SUB_TITLE = "Which account would you like?";
+          // add actions
+          for(var j=0;j<accountResponse.accounts[i].action.length;j++){
+            var button = {"text": accountResponse.accounts[i].action[j],"postback": accountResponse.accounts[i].action[j]};
+            FB_ACC_TYPE_BUTTON.push(button);
+          }
         }
       }
     } else if(count > 1){
