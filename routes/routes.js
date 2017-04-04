@@ -259,13 +259,15 @@ var handleLogin = function(req, res) {
 // Start handleAccountBalance
 var handleAccountBalance = function(req, res) {
   console.log("handleAccountBalance");
+  var p_accountType="";
+  var c_accountType="";
   var accountType="";
   var letter="";
 
   //read the parameters
   var parameters = req.body.result.parameters;
   if(parameters!=null){
-    accountType = parameters.accountType;
+    p_accountType = parameters.accountType;
   }
 
   // read the context
@@ -273,19 +275,24 @@ var handleAccountBalance = function(req, res) {
   if(context!=null){
     for(var i=0;i<context.length;i++){
       if(context[i].name == "accounttype"){
-        accountType = context[i].parameters.accounttype;
+        c_accountType = context[i].parameters.accounttype;
       }
       if(context[i].name == "accountletter"){
         letter = context[i].parameters.accountletter;
       }
     }
   }
-  console.log(accountType);
+  console.log(p_accountType);
+  console.log(c_accountType);
   // check for account type param
-  if(accountType == ""){
+  if(p_accountType == "" && c_accountType=""){
     getSelectAccountTypeResponse(req, res, "balance");
     return;
+  } else if(p_accountType!="" && c_accountType!="" && c_accountType!=p_accountType){
+    accountType = p_accountType;
   }
+  accountType = c_accountType;
+  console.log(accountType);
   // get balance response
   getBalanceResponse(req, res,accountType,letter);
   return;
