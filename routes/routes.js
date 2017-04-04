@@ -567,7 +567,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
   } else {
     var response =
       {
-      "speech": ,
+      "speech": GOOGLE_ACC_BAL_MESSAGE,
       "displayText": "",
       "data": {},
       "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
