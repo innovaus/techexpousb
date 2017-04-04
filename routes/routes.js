@@ -473,14 +473,9 @@ var getBalanceResponse =function (req, res,accountType,letter) {
     "displayText": "",
     "messages": [
                     {
-                      "title": "Checking xxx7174: $727.41",
-                      "subtitle": "Your Balance as of " + getDate() + " " +getTime(),
-                      "buttons": [
-                        {
-                          "text": "Get Transactions",
-                          "postback": "Get Transactions"
-                        }
-                      ],
+                      "title": FB_ACC_BAL_TITLE,
+                      "subtitle": FB_ACC_BAL_SUB_TITLE,
+                      "buttons": FB_ACC_BAL_BUTTON,
                       "type": 1
                     }
                   ],
