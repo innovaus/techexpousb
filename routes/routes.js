@@ -297,9 +297,17 @@ var handleAccountBalance = function(req, res) {
   }
 
   console.log(accountType);
-  // get balance response
-  getBalanceResponse(req, res,accountType,letter);
-  return;
+  //check for count of accountType
+  int count = account_count(accountType);
+  if(count == 1){
+    // get balance response
+    getBalanceResponse(req, res,accountType,letter);
+    return;
+  } else {
+    // get account selection
+    getAccountTypeResponse(req, res,accountType);
+    return;
+  }
 }
 // End handleAccountBalance
 
