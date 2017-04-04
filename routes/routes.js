@@ -290,8 +290,12 @@ var handleAccountBalance = function(req, res) {
     return;
   } else if(p_accountType!="" && c_accountType!="" && c_accountType!=p_accountType){
     accountType = p_accountType;
+  } else if(p_accountType!="" && c_accountType==""){
+    accountType = p_accountType;
+  } else {
+    accountType = c_accountType;
   }
-  accountType = c_accountType;
+
   console.log(accountType);
   // get balance response
   getBalanceResponse(req, res,accountType,letter);
