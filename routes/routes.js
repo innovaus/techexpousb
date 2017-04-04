@@ -516,7 +516,26 @@ var handleDueDateIntent =function (req, res) {
 var handleAccountTypeSelectionIntent = function(req, res) {
   console.log(req.body.result.parameters.accountType);
   var accountType = req.body.result.parameters.accountType;
-  getAccountTypeResponse(req, res,accountType);
+  var action="";
+  // check for action in context
+  var context =  req.body.result.contexts;
+  if(context!=null){
+    for(var i=0;i<context.length;i++){
+      if(context[i].name == "actiontype"){
+        action = context[i].parameters.action;
+      }
+    }
+  }
+  // check for account type count
+  var count = account_count(accountType);
+  if(count == 1 && action=="balance"){
+    // get balance response
+    getBalanceResponse(req, res,accountType,letter);
+    return;
+  } else {
+    getAccountTypeResponse(req, res,accountType,action);
+    return;
+  }
 }
 // End handleAccountTypeSelectionIntent
 
@@ -654,7 +673,7 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
   }
 }
 
-var getAccountTypeResponse =function (req, res,accountType) {
+var getAccountTypeResponse =function (req, res, accountType, action) {
 
   // account type selection
   var GOOGLE_ACC_TYPE_MESSAGE;
@@ -705,7 +724,9 @@ var getAccountTypeResponse =function (req, res,accountType) {
                          "type": 1
                        }
                      ],
-       "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}}],
+       "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}},
+                      {"name":"actiontype", "lifespan":1, "parameters":{"action":action}}
+                      ],
        "source": "US Bank"
        }
        res.send(response);
@@ -736,7 +757,7 @@ var getSelectAccountTypeResponse =function (req, res, action) {
   }
   accountTypes=uniq_fast(accountTypes);
 
-  GOOGLE_WELCOME_MESSAGE = "<speak>These are the types of accounts you have with us: "+accountTypes.toString()+", Which one would you like? Or, for more options, say help.</speak>";
+  GOOGLE_WELCOME_MESSAGE = "<speak>These are the types of accounts you have with us "+accountTypes.toString()+", Which one would you like?</speak>";
   FB_WELCOME_TITLE = "These are the types of accounts you have with us.";
   FB_WELCOME_SUB_TITLE = "Which one would you like?";
 
@@ -779,7 +800,7 @@ var getSelectAccountTypeResponse =function (req, res, action) {
       "speech":GOOGLE_WELCOME_MESSAGE,
       "displayText": "",
       "data": {},
-      "contextOut": [],
+      "contextOut": [{"name":"actiontype", "lifespan":1, "parameters":{"action":action}}],
       "source": "US Bank"
       }
     res.send(response);
