@@ -258,7 +258,7 @@ var handleLogin = function(req, res) {
 
 // Start handleAccountBalance
 var handleAccountBalance = function(req, res) {
-  //console.log(req.body.originalRequest.source);
+  console.log("handleAccountBalance");
   var accountType;
   var letter;
 
@@ -267,10 +267,8 @@ var handleAccountBalance = function(req, res) {
   if(parameters!=null){
     accountType = parameters.accountType;
     if(accountType!=null && accountType!=""){
-      if(accountType=="checkings"){
         getAccountTypeResponse(req, res,accountType);
         return;
-      }
     }
   }
 
@@ -286,7 +284,7 @@ var handleAccountBalance = function(req, res) {
       }
     }
   }
-
+  console.log(accountType);
   // check for account type param
   if(accountType == ""){
     getSelectAccountTypeResponse(req, res);
@@ -316,7 +314,7 @@ var handleTransactionHistory = function(req, res) {
       }
     }
   }
-  //console.log(accountType);
+  console.log(accountType);
   if(accountType == ""){
     getSelectAccountTypeResponse(req, res);
     return;
