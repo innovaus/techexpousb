@@ -43,6 +43,7 @@ var appRouter = function(app) {
         "accountNumber": "4571",
         "balance": "36,043.42",
         "credit": "10,956.58",
+        "due": "2,500.32",
         "option": "a",
         "action": [
           "Get Balance",
@@ -56,6 +57,7 @@ var appRouter = function(app) {
         "accountNumber": "7352",
         "balance": "6,676.44",
         "credit": "18,323.56",
+        "due": "89.23",
         "option": "b",
         "action": [
           "Get Balance",
@@ -119,7 +121,7 @@ var appRouter = function(app) {
     }
     // handle Due Date
     else if (intent == 'GetDueDatesIntent'){
-        handleTransactionHistory(req, res);
+        handleDueDateIntent(req, res);
     }
     // handle Account Type selection
     else if (intent == 'AccountTypeSelectionIntent'){
@@ -411,6 +413,97 @@ var handleTransactionHistory = function(req, res) {
 }
 // End handleTransactionHistory
 
+// start handleDueDateIntent
+var handleDueDateIntent =function (req, res) {
+  var accountType;
+  var letter;
+
+  //read the parameters
+  var parameters = req.body.result.parameters;
+  if(parameters!=null){
+    accountType = parameters.accountType;
+    if(accountType!=null && accountType!=""){
+        getAccountTypeResponse(req, res,accountType);
+        return;
+    }
+  }
+
+  // read the context
+  var context =  req.body.result.contexts;
+  if(context!=null){
+    for(var i=0;i<context.length;i++){
+      if(context[i].name == "accounttype"){
+        accountType = context[i].parameters.accounttype;
+      }
+      if(context[i].name == "accountletter"){
+        letter = context[i].parameters.accountletter;
+      }
+    }
+  }
+
+  // check for account type param
+  if(accountType == ""){
+    getSelectAccountTypeResponse(req, res);
+    return;
+  }
+
+  // account selection
+  var GOOGLE_DUE_DATE_MESSAGE;
+  var FB_DUE_DATE_TITLE;
+  var FB_DUE_DATE_SUB_TITLE;
+  var FB_DUE_DATE_BUTTON=[];
+
+  for(var i=0;i<accountResponse.accounts.length;i++){
+    if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
+
+
+
+      GOOGLE_DUE_DATE_MESSAGE = "<speak>The payment for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is due <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">"+getDate()+". The minimum payment due is $"+accountResponse.accounts[i].due+". You can make a payment, review transactions, or say help. What would you like to do?</speak>";
+      FB_DUE_DATE_TITLE = "The minimum payment due is $"+accountResponse.accounts[i].due+" for your credit card account ending in xxx"+accountResponse.accounts[i].accountNumber;
+      FB_DUE_DATE_SUB_TITLE = "What would you like to do?";
+      // add actions
+      for(var j=0;j<accountResponse.accounts[i].action.length;j++){
+        var button = {"text": accountResponse.accounts[i].action[j],"postback": accountResponse.accounts[i].action[j]};
+        FB_DUE_DATE_BUTTON.push(button);
+      }
+    }
+  }
+
+  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+    var response =
+       {
+       "speech": "",
+       "displayText": "",
+       "messages": [
+                       {
+                         "title": FB_DUE_DATE_TITLE,
+                         "subtitle": FB_DUE_DATE_SUB_TITLE,
+                         "buttons": FB_DUE_DATE_BUTTON,
+                         "type": 1
+                       }
+                     ],
+      "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+                     {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                   ],
+       "source": "US Bank"
+       }
+       res.send(response);
+  } else {
+    var response =
+      {
+      "speech": GOOGLE_DUE_DATE_MESSAGE,
+      "displayText": "",
+      "data": {},
+      "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+                      {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                    ],
+      "source": "US Bank"
+      }
+    res.send(response);
+  }
+}
+// end handleDueDateIntent
+
 // Start  handleAccountTypeSelectionIntent
 var handleAccountTypeSelectionIntent = function(req, res) {
   console.log(req.body.result.parameters.accountType);
@@ -438,7 +531,7 @@ var handleAccountSelection = function(req, res) {
 
 var getBalanceResponse =function (req, res,accountType,letter) {
 
-  // account selection
+  // account balance
   var GOOGLE_ACC_BAL_MESSAGE;
   var FB_ACC_BAL_TITLE;
   var FB_ACC_BAL_SUB_TITLE;
@@ -466,7 +559,6 @@ var getBalanceResponse =function (req, res,accountType,letter) {
   }
 
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-
     var response =
     {
     "speech": "",
@@ -485,106 +577,6 @@ var getBalanceResponse =function (req, res,accountType,letter) {
     "source": "US Bank"
     }
     res.send(response);
-
-    /*if(accountType == "checking" && letter == "a"){
-      var response =
-      {
-      "speech": "",
-      "displayText": "",
-      "messages": [
-                      {
-                        "title": "Checking xxx7174: $727.41",
-                        "subtitle": "Your Balance as of " + getDate() + " " +getTime(),
-                        "buttons": [
-                          {
-                            "text": "Get Transactions",
-                            "postback": "Get Transactions"
-                          }
-                        ],
-                        "type": 1
-                      }
-                    ],
-                    "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                                    {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
-                                  ],
-      "source": "US Bank"
-      }
-      res.send(response);
-    } else if(accountType == "checking" && letter == "b"){
-      var response =
-      {
-      "speech": "",
-      "displayText": "",
-      "messages": [
-                      {
-                        "title": "Checking xxx5901 balance is $0.25",
-                        "subtitle": "Your Balance as of " + getDate() + " " +getTime(),
-                        "buttons": [
-                          {
-                            "text": "Get Transactions",
-                            "postback": "Get Transactions"
-                          }
-                        ],
-                        "type": 1
-                      }
-                    ],
-                    "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                                    {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
-                                  ],
-      "source": "US Bank"
-      }
-      res.send(response);
-    }else if(accountType == "savings"){
-      var response =
-      {
-      "speech": "",
-      "displayText": "",
-      "messages": [
-                       {
-                        "title": "Saving  xxx3813 balance is $1,017.17",
-                        "subtitle": "Your Balance as of " + getDate()  + " " + getTime(),
-                        "buttons": [
-                          {
-                            "text": "Get Transactions",
-                            "postback": "Get Transactions"
-                          }
-                        ],
-                        "type": 1
-                      }
-                    ],
-                    "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}
-                                  ],
-      "source": "US Bank"
-      }
-      res.send(response);
-    } else if(accountType == "credit card"){
-      var response =
-      {
-      "speech": "",
-      "displayText": "",
-      "messages": [
-                       {
-                        "title": "Credit card xxx4571 balance is $6,918.64, and you have $40,081.36 of available credit.",
-                        "subtitle": "What would you like to do next?",
-                        "buttons": [
-                          {
-                            "text": "Get Transactions",
-                            "postback": "Get Transactions"
-                          },
-                          {
-                            "text": "Get Due Date",
-                            "postback": "Get Due Date"
-                          }
-                        ],
-                        "type": 1
-                      }
-                    ],
-                    "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}
-                                  ],
-      "source": "US Bank"
-      }
-      res.send(response);
-    }*/
   } else {
     var response =
       {
@@ -597,63 +589,6 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "source": "US Bank"
       }
     res.send(response);
-
-    /*if(accountType == "checkings" && letter == "a"){
-      var response =
-        {
-        "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-      "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
-        + "Checking account ending with <say-as interpret-as=\"digits\">7174 </say-as> is $727.41"
-        + "</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                        {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
-                      ],
-        "source": "US Bank"
-        }
-      res.send(response);
-    } else if(accountType == "checkings" && letter == "b"){
-      var response =
-        {
-        "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-      "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
-        + "Checking account ending with <say-as interpret-as=\"digits\">5901 </say-as> is $0.25"
-        + "</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                        {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
-                      ],
-        "source": "US Bank"
-        }
-      res.send(response);
-    }else if(accountType == "savings"){
-      var response =
-        {
-        "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-      "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
-        + ", Saving  account ending with <say-as interpret-as=\"digits\">3813</say-as>is $1,017.17"
-        + "</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}
-                      ],
-        "source": "US Bank"
-        }
-      res.send(response);
-    }else if(accountType == "Credit Card"){
-      var response =
-        {
-        "speech": "<speak>The current balance for your credit card account ending in <say-as interpret-as=\"digits\">4571</say-as> is $6,918.64, and you have $40,081.36 of available credit. This balance does not reflect pending transactions. Now, you can review transactions or get due dates for your next payment. What would you like to do next?  </speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}
-                      ],
-        "source": "US Bank"
-        }
-        res.send(response);
-    }*/
   }
 }
 
@@ -709,73 +644,6 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
       }
     res.send(response);
   }
-
-  /*if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    if (accountType == 'checkings'){
-      var title;
-      if(letter == "a"){
-        title = "For your checking account ending in xxx7174.";
-      } else {
-        title = "For your checking account ending in xxx5901.";
-      }
-
-       var response =
-          {
-          "speech": "",
-          "displayText": "",
-          "messages": [
-                          {
-                            "title": title,
-                            "subtitle": "What would you like to do?",
-                            "buttons": [
-                              {
-                                "text": "Get Balance",
-                                "postback": "Get Balance"
-                              },
-                              {
-                                "text": "Get Transaction",
-                                "postback": "Get Transaction"
-                              }
-                            ],
-                            "type": 1
-                          }
-                        ],
-          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":"checkings"}},
-                          {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
-                        ],
-          "source": "US Bank"
-          }
-          res.send(response);
-    }
-  } else {
-    if (accountType == 'checkings'){
-      if(letter == "a"){
-        var response =
-          {
-          "speech": "<speak>For your checking account ending in <say-as interpret-as=\"digits\">7174</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
-          "displayText": "",
-          "data": {},
-          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                          {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":"a"}}
-                        ],
-          "source": "US Bank"
-          }
-        res.send(response);
-      } else {
-        var response =
-          {
-          "speech": "<speak>For your checking account ending in <say-as interpret-as=\"digits\">5901</say-as>, you can say get balance or review transactions. What would you like to do?</speak>",
-          "displayText": "",
-          "data": {},
-          "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                          {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":"b"}}
-                        ],
-          "source": "US Bank"
-          }
-        res.send(response);
-      }
-    }
-  }*/
 }
 
 var getAccountTypeResponse =function (req, res,accountType) {
