@@ -532,7 +532,7 @@ var handleAccountTypeSelectionIntent = function(req, res) {
   var count = account_count(accountType);
   if(count == 1 && action=="balance"){
     // get balance response
-    getBalanceResponse(req, res,accountType,letter);
+    getBalanceResponse(req, res,accountType,"");
     return;
   } else {
     getAccountTypeResponse(req, res,accountType,action);
