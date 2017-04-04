@@ -536,7 +536,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "source": "US Bank"
       }
       res.send(response);
-    } else if(accountType == "Credit Card"){
+    } else if(accountType == "credit card"){
       var response =
       {
       "speech": "",
