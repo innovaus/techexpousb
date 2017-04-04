@@ -563,7 +563,7 @@ var handleAccountSelection = function(req, res) {
   console.log(letter);
   // check for account type count
   var count = account_count(accountType);
-  if(count == 1 && action=="balance"){
+  if((count == 1 || letter!="") && action=="balance"){
     // get balance response
     getBalanceResponse(req, res,accountType,"");
     return;
