@@ -738,7 +738,9 @@ var getAccountTypeResponse =function (req, res, accountType, action) {
       "speech": GOOGLE_ACC_TYPE_MESSAGE,
       "displayText": "",
       "data": {},
-      "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}}],
+      "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}},
+                     {"name":"actiontype", "lifespan":1, "parameters":{"action":action}}
+                     ],
       "source": "US Bank"
       }
     res.send(response);
