@@ -266,10 +266,6 @@ var handleAccountBalance = function(req, res) {
   var parameters = req.body.result.parameters;
   if(parameters!=null){
     accountType = parameters.accountType;
-    if(accountType!=null && accountType!=""){
-        getAccountTypeResponse(req, res,accountType);
-        return;
-    }
   }
 
   // read the context
@@ -287,7 +283,7 @@ var handleAccountBalance = function(req, res) {
   console.log(accountType);
   // check for account type param
   if(accountType == ""){
-    getSelectAccountTypeResponse(req, res);
+    getSelectAccountTypeResponse(req, res, "balance");
     return;
   }
   // get balance response
@@ -475,8 +471,8 @@ var handleDueDateIntent =function (req, res) {
                          "type": 1
                        }
                      ],
-      "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                     {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+      "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}},
+                     {"name":"accountletter", "lifespan":1, "parameters":{"accountletter":letter}}
                    ],
        "source": "US Bank"
        }
@@ -487,8 +483,8 @@ var handleDueDateIntent =function (req, res) {
       "speech": GOOGLE_DUE_DATE_MESSAGE,
       "displayText": "",
       "data": {},
-      "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                      {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+      "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}},
+                      {"name":"accountletter", "lifespan":1, "parameters":{"accountletter":letter}}
                     ],
       "source": "US Bank"
       }
@@ -564,8 +560,8 @@ var getBalanceResponse =function (req, res,accountType,letter) {
                       "type": 1
                     }
                   ],
-                  "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                                  {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                  "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}},
+                                  {"name":"accountletter", "lifespan":1, "parameters":{"accountletter":letter}}
                                 ],
     "source": "US Bank"
     }
@@ -576,8 +572,8 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "speech": GOOGLE_ACC_BAL_MESSAGE,
       "displayText": "",
       "data": {},
-      "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                      {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+      "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}},
+                      {"name":"accountletter", "lifespan":1, "parameters":{"accountletter":letter}}
                     ],
       "source": "US Bank"
       }
@@ -618,8 +614,8 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
                          "type": 1
                        }
                      ],
-      "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                     {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+      "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}},
+                     {"name":"accountletter", "lifespan":1, "parameters":{"accountletter":letter}}
                    ],
        "source": "US Bank"
        }
@@ -630,8 +626,8 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
       "speech": GOOGLE_ACC_SELECT_MESSAGE,
       "displayText": "",
       "data": {},
-      "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
-                      {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+      "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}},
+                      {"name":"accountletter", "lifespan":1, "parameters":{"accountletter":letter}}
                     ],
       "source": "US Bank"
       }
@@ -690,7 +686,7 @@ var getAccountTypeResponse =function (req, res,accountType) {
                          "type": 1
                        }
                      ],
-       "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}],
+       "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}}],
        "source": "US Bank"
        }
        res.send(response);
@@ -700,56 +696,75 @@ var getAccountTypeResponse =function (req, res,accountType) {
       "speech": GOOGLE_ACC_TYPE_MESSAGE,
       "displayText": "",
       "data": {},
-      "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}}],
+      "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}}],
       "source": "US Bank"
       }
     res.send(response);
   }
 }
 
-var getSelectAccountTypeResponse =function (req, res) {
-  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    var branchResponse =
-                  {
-                  "speech": "",
-                  "displayText": "",
-                  "messages": [
-                      {
-                        "title": "Choose Account Type: ",
-                        "subtitle": "",
-                        "buttons": [
-                          {
-                            "text": "Checking xx3562",
-                            "postback": "Transactions of Checking"
-                          },
-                          {
-                            "text": "Saving xxx4321",
-                            "postback": "Transactions of Saving"
-                          },
-                          {
-                            "text": "CD xxx4789",
-                            "postback": "Transactions of CD"
-                          }
-                        ],
-                        "type": 1
-                      }
-                    ],
+var getSelectAccountTypeResponse =function (req, res, action) {
+  // welcome message strings
+  var GOOGLE_WELCOME_MESSAGE;
+  var FB_WELCOME_TITLE;
+  var FB_WELCOME_SUB_TITLE;
+  var FB_WELCOME_BUTTON=[];
+  // unique account types
+  var accountTypes= [];
 
-                  "contextOut": [],
-                  "source": "U.S Bank"
-                  }
-        res.send(branchResponse);
-    } else {
-      var response =
-        {
-        "speech": "<speak>Please select the account. These are the types of accounts you have with us: checking, savings, credit, Which one would you like? Or, for more options, say help.</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [],
-        "source": "US Bank"
-        }
-      res.send(response);
+  for(var i=0;i<accountResponse.accounts.length;i++){
+    accountTypes.push(accountResponse.accounts[i].accounttype);
+  }
+  accountTypes=uniq_fast(accountTypes);
+
+  GOOGLE_WELCOME_MESSAGE = "<speak>These are the types of accounts you have with us: "+accountTypes.toString()+", Which one would you like? Or, for more options, say help.</speak>";
+  FB_WELCOME_TITLE = "These are the types of accounts you have with us.";
+  FB_WELCOME_SUB_TITLE = "Which one would you like?";
+
+  for(var i=0;i<accountTypes.length;i++){
+    var button = {"text": accountTypes[i],"postback": accountTypes[i]};
+    FB_WELCOME_BUTTON.push(button);
+  }
+
+  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+    var response =
+    {
+    "speech": "",
+    "displayText": "",
+    "messages": [
+                    {
+                      "title": FB_WELCOME_TITLE,
+                      "subtitle": FB_WELCOME_SUB_TITLE,
+                      "buttons": FB_WELCOME_BUTTON,
+                      "type": 1
+                    },
+                    {
+                      "title": "Other Queries",
+                      "subtitle": "",
+                      "buttons": [
+                        {
+                          "text": "Help",
+                          "postback": "Help"
+                        }
+                      ],
+                      "type": 1
+                    }
+                  ],
+    "contextOut": [{"name":"actiontype", "lifespan":1, "parameters":{"action":action}}],
+    "source": "US Bank"
     }
+    res.send(response);
+  } else {
+    var response =
+      {
+      "speech":GOOGLE_WELCOME_MESSAGE,
+      "displayText": "",
+      "data": {},
+      "contextOut": [],
+      "source": "US Bank"
+      }
+    res.send(response);
+  }
 }
 
 // Start Handle Branch Locator
