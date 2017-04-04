@@ -285,7 +285,7 @@ var handleAccountBalance = function(req, res) {
   console.log(p_accountType);
   console.log(c_accountType);
   // check for account type param
-  if(p_accountType == "" && c_accountType=""){
+  if(p_accountType == "" && c_accountType == ""){
     getSelectAccountTypeResponse(req, res, "balance");
     return;
   } else if(p_accountType!="" && c_accountType!="" && c_accountType!=p_accountType){
