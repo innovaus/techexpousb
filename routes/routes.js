@@ -41,7 +41,8 @@ var appRouter = function(app) {
       {
         "accounttype": "credit card",
         "accountNumber": "4571",
-        "balance": "10,956.58",
+        "balance": "36,043.42",
+        "credit": "10,956.58",
         "option": "a",
         "action": [
           "Get Balance",
@@ -54,6 +55,7 @@ var appRouter = function(app) {
         "accounttype": "credit card",
         "accountNumber": "7352",
         "balance": "6,676.44",
+        "credit": "18,323.56",
         "option": "b",
         "action": [
           "Get Balance",
@@ -86,12 +88,6 @@ var appRouter = function(app) {
       }
     }
     return count;
-  }
-
-
-
-  var creatAccTypeMessage = function(accountType) {
-
   }
 
   app.get("/", function(req, res) {
@@ -465,7 +461,27 @@ var getBalanceResponse =function (req, res,accountType,letter) {
   }
 
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    if(accountType == "checking" && letter == "a"){
+
+    var response =
+    {
+    "speech": "",
+    "displayText": "",
+    "messages": [
+                    {
+                      "title": FB_ACC_BAL_TITLE,
+                      "subtitle": FB_ACC_BAL_SUB_TITLE,
+                      "buttons": FB_ACC_BAL_BUTTON,
+                      "type": 1
+                    }
+                  ],
+                  "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+                                  {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                                ],
+    "source": "US Bank"
+    }
+    res.send(response);
+
+    /*if(accountType == "checking" && letter == "a"){
       var response =
       {
       "speech": "",
@@ -563,7 +579,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "source": "US Bank"
       }
       res.send(response);
-    }
+    }*/
   } else {
     var response =
       {
