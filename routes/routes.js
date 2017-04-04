@@ -455,17 +455,12 @@ var handleDueDateIntent =function (req, res) {
 
   for(var i=0;i<accountResponse.accounts.length;i++){
     if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
-
-
-
       GOOGLE_DUE_DATE_MESSAGE = "<speak>The payment for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is due <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">"+getDate()+". The minimum payment due is $"+accountResponse.accounts[i].due+". You can make a payment, review transactions, or say help. What would you like to do?</speak>";
       FB_DUE_DATE_TITLE = "The minimum payment due is $"+accountResponse.accounts[i].due+" for your credit card account ending in xxx"+accountResponse.accounts[i].accountNumber;
       FB_DUE_DATE_SUB_TITLE = "What would you like to do?";
       // add actions
-      for(var j=0;j<accountResponse.accounts[i].action.length;j++){
-        var button = {"text": accountResponse.accounts[i].action[j],"postback": accountResponse.accounts[i].action[j]};
-        FB_DUE_DATE_BUTTON.push(button);
-      }
+      var button = {"text": "Make Payment","postback": "Make Payment"};
+      FB_DUE_DATE_BUTTON.push(button);
     }
   }
 
