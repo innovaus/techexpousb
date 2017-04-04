@@ -565,7 +565,7 @@ var handleAccountSelection = function(req, res) {
   var count = account_count(accountType);
   if((count == 1 || letter!="") && action=="balance"){
     // get balance response
-    getBalanceResponse(req, res,accountType,"");
+    getBalanceResponse(req, res,accountType,letter);
     return;
   } else {
     getAccountSelectResponse(req, res, accountType, letter);
