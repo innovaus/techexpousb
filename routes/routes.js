@@ -259,8 +259,8 @@ var handleLogin = function(req, res) {
 // Start handleAccountBalance
 var handleAccountBalance = function(req, res) {
   console.log("handleAccountBalance");
-  var accountType;
-  var letter;
+  var accountType="";
+  var letter="";
 
   //read the parameters
   var parameters = req.body.result.parameters;
