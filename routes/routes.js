@@ -31,6 +31,7 @@ var appRouter = function(app) {
         "accounttype": "savings",
         "accountNumber": "3813",
         "balance": "1,017.17",
+        "option": "",
         "action": [
           "Get Balance",
           "Get Transaction"
@@ -300,7 +301,7 @@ var handleTransactionHistory = function(req, res) {
   }
 
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    if (accountType == 'checkings'){
+    if (accountType == 'checking'){
        var response =
           {
           "speech": "",
@@ -416,8 +417,31 @@ var handleAccountSelection = function(req, res) {
 // End handleAccountSelection
 
 var getBalanceResponse =function (req, res,accountType,letter) {
+
+  // account selection
+  var GOOGLE_ACC_BAL_MESSAGE;
+  var FB_ACC_BAL_TITLE;
+  var FB_ACC_BAL_SUB_TITLE;
+  var FB_ACC_BAL_BUTTON=[];
+
+  for(var i=0;i<accountResponse.accounts.length;i++){
+    if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
+      GOOGLE_ACC_BAL_MESSAGE = "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
+      + accountType+" account ending with <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance
+      + "</speak>";
+      FB_ACC_BAL_TITLE = "For your "+accountType+" account ending in xxx"+accountResponse.accounts[i].accountNumber;
+      FB_ACC_BAL_SUB_TITLE = "What would you like to do?";
+      // add actions
+      for(var j=0;j<accountResponse.accounts[i].action.length;j++){
+        var button = {"text": accountResponse.accounts[i].action[j],"postback": accountResponse.accounts[i].action[j]};
+        FB_ACC_BAL_BUTTON.push(button);
+      }
+    }
+  }
+
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    if(accountType == "checkings" && letter == "a"){
+    if(accountType == "checking" && letter == "a"){
       var response =
       {
       "speech": "",
@@ -441,7 +465,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       "source": "US Bank"
       }
       res.send(response);
-    } else if(accountType == "checkings" && letter == "b"){
+    } else if(accountType == "checking" && letter == "b"){
       var response =
       {
       "speech": "",
@@ -517,7 +541,19 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       res.send(response);
     }
   } else {
-    if(accountType == "checkings" && letter == "a"){
+    var response =
+      {
+      "speech": ,
+      "displayText": "",
+      "data": {},
+      "contextOut": [{"name":"accounttype", "lifespan":2, "parameters":{"accounttype":accountType}},
+                      {"name":"accountletter", "lifespan":2, "parameters":{"accountletter":letter}}
+                    ],
+      "source": "US Bank"
+      }
+    res.send(response);
+
+    /*if(accountType == "checkings" && letter == "a"){
       var response =
         {
         "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
@@ -572,7 +608,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
         "source": "US Bank"
         }
         res.send(response);
-    }
+    }*/
   }
 }
 
