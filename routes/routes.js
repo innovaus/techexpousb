@@ -514,7 +514,7 @@ var handleDueDateIntent =function (req, res) {
 
 // Start  handleAccountTypeSelectionIntent
 var handleAccountTypeSelectionIntent = function(req, res) {
-  console.log(req.body.result.parameters.accountType);
+  console.log("handleAccountTypeSelectionIntent");
   var accountType = req.body.result.parameters.accountType;
   var action="";
   // check for action in context
@@ -526,6 +526,8 @@ var handleAccountTypeSelectionIntent = function(req, res) {
       }
     }
   }
+  console.log(accountType);
+  console.log(action);
   // check for account type count
   var count = account_count(accountType);
   if(count == 1 && action=="balance"){
