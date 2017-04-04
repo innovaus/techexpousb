@@ -446,12 +446,17 @@ var getBalanceResponse =function (req, res,accountType,letter) {
 
   for(var i=0;i<accountResponse.accounts.length;i++){
     if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
-      GOOGLE_ACC_BAL_MESSAGE = "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
-      + accountType+" account ending with <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance
-      + "</speak>";
-      FB_ACC_BAL_TITLE = "For your "+accountType+" account ending in xxx"+accountResponse.accounts[i].accountNumber;
-      FB_ACC_BAL_SUB_TITLE = "What would you like to do?";
+      //check for credit card
+      if(accountType != 'credit card'){
+        GOOGLE_ACC_BAL_MESSAGE = "<speak>The available balance for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance+". Next, you can review recent transactions, or start over. What would you like to do next?</speak>";
+        FB_ACC_BAL_TITLE = "The available balance for your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber+" is $"+accountResponse.accounts[i].balance+".";
+        FB_ACC_BAL_SUB_TITLE = "What would you like to do next?";
+      } else {
+        GOOGLE_ACC_BAL_MESSAGE = "<speak>The current balance for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance+", and you have $"+accountResponse.accounts[i].credit+" of available credit. This balance does not reflect pending transactions. Now, you can review transactions or get due dates for your next payment. What would you like to do next?</speak>";
+        FB_ACC_BAL_TITLE = "The current balance for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance+", and you have $"+accountResponse.accounts[i].credit+" of available credit.";
+        FB_ACC_BAL_SUB_TITLE = "What would you like to do next?";
+      }
+
       // add actions
       for(var j=0;j<accountResponse.accounts[i].action.length;j++){
         var button = {"text": accountResponse.accounts[i].action[j],"postback": accountResponse.accounts[i].action[j]};
@@ -468,9 +473,14 @@ var getBalanceResponse =function (req, res,accountType,letter) {
     "displayText": "",
     "messages": [
                     {
-                      "title": FB_ACC_BAL_TITLE,
-                      "subtitle": FB_ACC_BAL_SUB_TITLE,
-                      "buttons": FB_ACC_BAL_BUTTON,
+                      "title": "Checking xxx7174: $727.41",
+                      "subtitle": "Your Balance as of " + getDate() + " " +getTime(),
+                      "buttons": [
+                        {
+                          "text": "Get Transactions",
+                          "postback": "Get Transactions"
+                        }
+                      ],
                       "type": 1
                     }
                   ],
