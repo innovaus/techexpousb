@@ -37,6 +37,30 @@ var appRouter = function(app) {
           "Get Transaction"
         ],
         "transaction": []
+      },
+      {
+        "accounttype": "credit card",
+        "accountNumber": "4571",
+        "balance": "10,956.58",
+        "option": "a",
+        "action": [
+          "Get Balance",
+          "Get Transaction",
+          "Get Due"
+        ],
+        "transaction": []
+      },
+      {
+        "accounttype": "credit card",
+        "accountNumber": "7352",
+        "balance": "6,676.44",
+        "option": "b",
+        "action": [
+          "Get Balance",
+          "Get Transaction",
+          "Get Due"
+        ],
+        "transaction": []
       }
     ]
   };
