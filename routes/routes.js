@@ -299,7 +299,7 @@ var handleAccountBalance = function(req, res) {
   console.log(accountType);
   //check for count of accountType
   var count = account_count(accountType);
-  if(count == 1){
+  if(count == 1 || letter != ""){
     // get balance response
     getBalanceResponse(req, res,accountType,letter);
     return;
