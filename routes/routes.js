@@ -298,7 +298,7 @@ var handleAccountBalance = function(req, res) {
 
   console.log(accountType);
   //check for count of accountType
-  int count = account_count(accountType);
+  var count = account_count(accountType);
   if(count == 1){
     // get balance response
     getBalanceResponse(req, res,accountType,letter);
