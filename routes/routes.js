@@ -543,18 +543,34 @@ var handleAccountTypeSelectionIntent = function(req, res) {
 
 // Start  handleAccountSelection
 var handleAccountSelection = function(req, res) {
+  console.log("handleAccountSelection");
   var letter = req.body.result.parameters.accountletter;
   var context =  req.body.result.contexts;
   var accountType;
+  var action="";
   if(context!=null){
     for(var i=0;i<context.length;i++){
       if(context[i].name == "accounttype"){
         accountType = context[i].parameters.accounttype;
       }
+      if(context[i].name == "actiontype"){
+        action = context[i].parameters.action;
+      }
     }
   }
   console.log(accountType);
-  getAccountSelectResponse(req, res, accountType, letter);
+  console.log(action);
+  console.log(letter);
+  // check for account type count
+  var count = account_count(accountType);
+  if(count == 1 && action=="balance"){
+    // get balance response
+    getBalanceResponse(req, res,accountType,"");
+    return;
+  } else {
+    getAccountSelectResponse(req, res, accountType, letter);
+    return;
+  }
 }
 // End handleAccountSelection
 
