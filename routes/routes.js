@@ -408,7 +408,7 @@ var getTransResponse =function (req, res,accountType,letter) {
   for(var i=0;i<accountResponse.accounts.length;i++){
     if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
       GOOGLE_ACC_TRANS_MESSAGE = "<speak>Ok, I'll review the <say-as interpret-as=\"digits\">5</say-as> most recent transactions for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>. "+accountResponse.accounts[i].transaction.toString()+". What would you like to do next?</speak>";
-      FB_ACC_TRANS_TITLE = "Recent transactions for your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber+"</say-as>";
+      FB_ACC_TRANS_TITLE = "Recent transactions for your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber;
       FB_ACC_TRANS_SUB_TITLE = "Last 3 transactions";
 
       // add transactions
@@ -416,7 +416,9 @@ var getTransResponse =function (req, res,accountType,letter) {
         if(j==3){
             break;
         }
-        var button = {"text": accountResponse.accounts[i].transaction[j],"postback": ""};
+        var trans = accountResponse.accounts[i].transaction[j];
+        trans = trans.substring(trans.indexOf("$"), trans.length);
+        var button = {"text": trans,"postback": ""};
         FB_ACC_TRANS_BUTTON.push(button);
       }
 
