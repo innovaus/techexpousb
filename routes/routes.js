@@ -372,7 +372,7 @@ var handleTransactionHistory = function(req, res) {
   console.log(c_accountType);
   // check for account type param
   if(p_accountType == "" && c_accountType == ""){
-    getSelectAccountTypeResponse(req, res, "balance");
+    getSelectAccountTypeResponse(req, res, "transaction");
     return;
   } else if(p_accountType!="" && c_accountType!="" && c_accountType!=p_accountType){
     accountType = p_accountType;
@@ -417,6 +417,7 @@ var getTransResponse =function (req, res,accountType,letter) {
             break;
         }
         var trans = accountResponse.accounts[i].transaction[j];
+        //trans = trans.substring(trans.indexOf("$"), trans.length);
         var str1 = trans.substring(11, trans.indexOf(" was"));
         var str2 = trans.substring(trans.indexOf(" on"), trans.length);
         trans = str1+str2;
@@ -581,7 +582,13 @@ var handleAccountTypeSelectionIntent = function(req, res) {
     // get balance response
     getBalanceResponse(req, res,accountType,"");
     return;
-  } else {
+  }
+  else if(count == 1 && action=="transaction"){
+    // get balance response
+    getTransResponse(req, res,accountType,letter);
+    return;
+  }
+  else {
     getAccountTypeResponse(req, res,accountType,action);
     return;
   }
@@ -614,7 +621,13 @@ var handleAccountSelection = function(req, res) {
     // get balance response
     getBalanceResponse(req, res,accountType,letter);
     return;
-  } else {
+  }
+  else if((count == 1 || letter!="") && action=="balance"){
+    // get trans response
+    getTransResponse(req, res,accountType,letter);
+    return;
+  }
+  else {
     getAccountSelectResponse(req, res, accountType, letter);
     return;
   }
