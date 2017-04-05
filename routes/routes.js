@@ -15,11 +15,11 @@ var appRouter = function(app) {
           "Get Transaction"
         ],
         "transaction": [
-          "A Pending Debit of $10.00 was made on 4/1/2017",
-          "A Pending Credit of $20.00 was made on 4/1/2017",
-          "A Posted Debit of $30.00 was made on 4/2/2017",
-          "A Posted Credit of $40.00 was made on 4/2/2017",
-          "A Pending Debit of $50.00 was made on 4/4/2017",
+          " A Pending Debit of $10.00 was made on 4/1/2017",
+          " A Pending Credit of $20.00 was made on 4/1/2017",
+          " A Posted Debit of $30.00 was made on 4/2/2017",
+          " A Posted Credit of $40.00 was made on 4/2/2017",
+          " A Pending Debit of $50.00 was made on 4/4/2017",
         ]
       },
       {
@@ -32,11 +32,11 @@ var appRouter = function(app) {
           "Get Transaction"
         ],
         "transaction": [
-          "A Pending Debit of $10.00 was made on 4/1/2017",
-          "A Pending Credit of $20.00 was made on 4/1/2017",
-          "A Posted Debit of $30.00 was made on 4/2/2017",
-          "A Posted Credit of $40.00 was made on 4/2/2017",
-          "A Pending Debit of $50.00 was made on 4/4/2017",
+          " A Pending Debit of $10.00 was made on 4/1/2017",
+          " A Pending Credit of $20.00 was made on 4/1/2017",
+          " A Posted Debit of $30.00 was made on 4/2/2017",
+          " A Posted Credit of $40.00 was made on 4/2/2017",
+          " A Pending Debit of $50.00 was made on 4/4/2017",
         ]
       },
       {
@@ -49,11 +49,11 @@ var appRouter = function(app) {
           "Get Transaction"
         ],
         "transaction": [
-          "A Pending Debit of $10.00 was made on 4/1/2017",
-          "A Pending Credit of $20.00 was made on 4/1/2017",
-          "A Posted Debit of $30.00 was made on 4/2/2017",
-          "A Posted Credit of $40.00 was made on 4/2/2017",
-          "A Pending Debit of $50.00 was made on 4/4/2017",
+          " A Pending Debit of $10.00 was made on 4/1/2017",
+          " A Pending Credit of $20.00 was made on 4/1/2017",
+          " A Posted Debit of $30.00 was made on 4/2/2017",
+          " A Posted Credit of $40.00 was made on 4/2/2017",
+          " A Pending Debit of $50.00 was made on 4/4/2017",
         ]
       },
       {
@@ -69,11 +69,11 @@ var appRouter = function(app) {
           "Get Due"
         ],
         "transaction": [
-          "A Pending Debit of $10.00 was made on 4/1/2017",
-          "A Pending Credit of $20.00 was made on 4/1/2017",
-          "A Posted Debit of $30.00 was made on 4/2/2017",
-          "A Posted Credit of $40.00 was made on 4/2/2017",
-          "A Pending Debit of $50.00 was made on 4/4/2017",
+          " A Pending Debit of $10.00 was made on 4/1/2017",
+          " A Pending Credit of $20.00 was made on 4/1/2017",
+          " A Posted Debit of $30.00 was made on 4/2/2017",
+          " A Posted Credit of $40.00 was made on 4/2/2017",
+          " A Pending Debit of $50.00 was made on 4/4/2017",
         ]
       },
       {
@@ -89,11 +89,11 @@ var appRouter = function(app) {
           "Get Due"
         ],
         "transaction": [
-          "A Pending Debit of $10.00 was made on 4/1/2017",
-          "A Pending Credit of $20.00 was made on 4/1/2017",
-          "A Posted Debit of $30.00 was made on 4/2/2017",
-          "A Posted Credit of $40.00 was made on 4/2/2017",
-          "A Pending Debit of $50.00 was made on 4/4/2017",
+          " A Pending Debit of $10.00 was made on 4/1/2017",
+          " A Pending Credit of $20.00 was made on 4/1/2017",
+          " A Posted Debit of $30.00 was made on 4/2/2017",
+          " A Posted Credit of $40.00 was made on 4/2/2017",
+          " A Pending Debit of $50.00 was made on 4/4/2017",
         ]
       }
     ]
@@ -409,7 +409,7 @@ var getTransResponse =function (req, res,accountType,letter) {
       //check for credit card
       if(accountType != 'credit card'){
 
-        GOOGLE_ACC_TRANS_MESSAGE = "<speak>Ok, I'll review the <say-as interpret-as=\"digits\"> 5</say-as> most recent transactions for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>."+accountResponse.accounts[i].transaction.toString()+".What would you like to do next?</speak>";
+        GOOGLE_ACC_TRANS_MESSAGE = "<speak>Ok, I'll review the <say-as interpret-as=\"digits\">5</say-as> most recent transactions for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>. "+accountResponse.accounts[i].transaction.toString()+". What would you like to do next?</speak>";
         FB_ACC_TRANS_TITLE = "The available balance is $"+accountResponse.accounts[i].balance+" for your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber+".";
         FB_ACC_TRANS_SUB_TITLE = "What would you like to do next?";
       } else {
