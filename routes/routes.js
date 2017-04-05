@@ -6,7 +6,7 @@ var appRouter = function(app) {
   var accountResponse = {
     "accounts": [
       {
-        "accounttype": "checking",
+        "accounttype": "Checking",
         "accountNumber": "7174",
         "balance": "727.41",
         "option": "a",
@@ -17,7 +17,7 @@ var appRouter = function(app) {
         "transaction": []
       },
       {
-        "accounttype": "checking",
+        "accounttype": "Checking",
         "accountNumber": "5901",
         "balance": "0.25",
         "option": "b",
@@ -28,7 +28,7 @@ var appRouter = function(app) {
         "transaction": []
       },
       {
-        "accounttype": "savings",
+        "accounttype": "Savings",
         "accountNumber": "3813",
         "balance": "1,017.17",
         "option": "",
@@ -39,7 +39,7 @@ var appRouter = function(app) {
         "transaction": []
       },
       {
-        "accounttype": "credit card",
+        "accounttype": "Credit Card",
         "accountNumber": "4571",
         "balance": "36,043.42",
         "credit": "10,956.58",
@@ -53,7 +53,7 @@ var appRouter = function(app) {
         "transaction": []
       },
       {
-        "accounttype": "credit card",
+        "accounttype": "Credit Card",
         "accountNumber": "7352",
         "balance": "6,676.44",
         "credit": "18,323.56",
@@ -297,6 +297,7 @@ var handleAccountBalance = function(req, res) {
   }
 
   console.log(accountType);
+  console.log(letter);
   //check for count of accountType
   var count = account_count(accountType);
   if(count == 1 || letter != ""){
