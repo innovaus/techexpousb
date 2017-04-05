@@ -417,7 +417,9 @@ var getTransResponse =function (req, res,accountType,letter) {
             break;
         }
         var trans = accountResponse.accounts[i].transaction[j];
-        trans = trans.substring(trans.indexOf("$"), trans.length);
+        var str1 = trans.substring(11, trans.indexOf(" was"));
+        var str2 = trans.substring(trans.indexOf(" on"), trans.length);
+        trans = str1+str2;
         var button = {"text": trans,"postback": ""};
         FB_ACC_TRANS_BUTTON.push(button);
       }
