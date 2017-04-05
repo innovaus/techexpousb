@@ -622,7 +622,7 @@ var handleAccountSelection = function(req, res) {
     getBalanceResponse(req, res,accountType,letter);
     return;
   }
-  else if((count == 1 || letter!="") && action=="balance"){
+  else if((count == 1 || letter!="") && action=="transaction"){
     // get trans response
     getTransResponse(req, res,accountType,letter);
     return;
