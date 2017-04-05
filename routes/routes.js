@@ -336,7 +336,7 @@ var handleAccountBalance = function(req, res) {
     return;
   } else {
     // get account selection
-    getAccountTypeResponse(req, res,accountType);
+    getAccountTypeResponse(req, res,accountType,"balance");
     return;
   }
 }
@@ -392,7 +392,7 @@ var handleTransactionHistory = function(req, res) {
     return;
   } else {
     // get account selection
-    getAccountTypeResponse(req, res,accountType);
+    getAccountTypeResponse(req, res,accountType, "transaction");
     return;
   }
 }
