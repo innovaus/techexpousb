@@ -15,11 +15,11 @@ var appRouter = function(app) {
           "Get Transaction"
         ],
         "transaction": [
-          "A Pending Debit of $10.00 was made on 4/1/2017.",
-          "A Pending Credit of $20.00 was made on 4/1/2017.",
-          "A Posted Debit of $30.00 was made on 4/2/2017.",
-          "A Posted Credit of $40.00 was made on 4/2/2017.",
-          "A Pending Debit of $50.00 was made on 4/4/2017.",
+          "A Pending Debit of $10.00 was made on 4/1/2017",
+          "A Pending Credit of $20.00 was made on 4/1/2017",
+          "A Posted Debit of $30.00 was made on 4/2/2017",
+          "A Posted Credit of $40.00 was made on 4/2/2017",
+          "A Pending Debit of $50.00 was made on 4/4/2017",
         ]
       },
       {
@@ -32,11 +32,11 @@ var appRouter = function(app) {
           "Get Transaction"
         ],
         "transaction": [
-          "A Pending Debit of $10.00 was made on 4/1/2017.",
-          "A Pending Credit of $20.00 was made on 4/1/2017.",
-          "A Posted Debit of $30.00 was made on 4/2/2017.",
-          "A Posted Credit of $40.00 was made on 4/2/2017.",
-          "A Pending Debit of $50.00 was made on 4/4/2017.",
+          "A Pending Debit of $10.00 was made on 4/1/2017",
+          "A Pending Credit of $20.00 was made on 4/1/2017",
+          "A Posted Debit of $30.00 was made on 4/2/2017",
+          "A Posted Credit of $40.00 was made on 4/2/2017",
+          "A Pending Debit of $50.00 was made on 4/4/2017",
         ]
       },
       {
@@ -49,11 +49,11 @@ var appRouter = function(app) {
           "Get Transaction"
         ],
         "transaction": [
-          "A Pending Debit of $10.00 was made on 4/1/2017.",
-          "A Pending Credit of $20.00 was made on 4/1/2017.",
-          "A Posted Debit of $30.00 was made on 4/2/2017.",
-          "A Posted Credit of $40.00 was made on 4/2/2017.",
-          "A Pending Debit of $50.00 was made on 4/4/2017.",
+          "A Pending Debit of $10.00 was made on 4/1/2017",
+          "A Pending Credit of $20.00 was made on 4/1/2017",
+          "A Posted Debit of $30.00 was made on 4/2/2017",
+          "A Posted Credit of $40.00 was made on 4/2/2017",
+          "A Pending Debit of $50.00 was made on 4/4/2017",
         ]
       },
       {
@@ -69,11 +69,11 @@ var appRouter = function(app) {
           "Get Due"
         ],
         "transaction": [
-          "A Pending Debit of $10.00 was made on 4/1/2017.",
-          "A Pending Credit of $20.00 was made on 4/1/2017.",
-          "A Posted Debit of $30.00 was made on 4/2/2017.",
-          "A Posted Credit of $40.00 was made on 4/2/2017.",
-          "A Pending Debit of $50.00 was made on 4/4/2017.",
+          "A Pending Debit of $10.00 was made on 4/1/2017",
+          "A Pending Credit of $20.00 was made on 4/1/2017",
+          "A Posted Debit of $30.00 was made on 4/2/2017",
+          "A Posted Credit of $40.00 was made on 4/2/2017",
+          "A Pending Debit of $50.00 was made on 4/4/2017",
         ]
       },
       {
@@ -89,11 +89,11 @@ var appRouter = function(app) {
           "Get Due"
         ],
         "transaction": [
-          "A Pending Debit of $10.00 was made on 4/1/2017.",
-          "A Pending Credit of $20.00 was made on 4/1/2017.",
-          "A Posted Debit of $30.00 was made on 4/2/2017.",
-          "A Posted Credit of $40.00 was made on 4/2/2017.",
-          "A Pending Debit of $50.00 was made on 4/4/2017.",
+          "A Pending Debit of $10.00 was made on 4/1/2017",
+          "A Pending Credit of $20.00 was made on 4/1/2017",
+          "A Posted Debit of $30.00 was made on 4/2/2017",
+          "A Posted Credit of $40.00 was made on 4/2/2017",
+          "A Pending Debit of $50.00 was made on 4/4/2017",
         ]
       }
     ]
