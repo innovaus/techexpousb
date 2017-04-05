@@ -585,7 +585,7 @@ var handleAccountTypeSelectionIntent = function(req, res) {
   }
   else if(count == 1 && action=="transaction"){
     // get balance response
-    getTransResponse(req, res,accountType,letter);
+    getTransResponse(req, res,accountType,"");
     return;
   }
   else {
