@@ -14,7 +14,13 @@ var appRouter = function(app) {
           "Get Balance",
           "Get Transaction"
         ],
-        "transaction": []
+        "transaction": [
+          "A Pending Debit of $10.00 was made on 4/1/2017.",
+          "A Pending Credit of $20.00 was made on 4/1/2017.",
+          "A Posted Debit of $30.00 was made on 4/2/2017.",
+          "A Posted Credit of $40.00 was made on 4/2/2017.",
+          "A Pending Debit of $50.00 was made on 4/4/2017.",
+        ]
       },
       {
         "accounttype": "Checking",
@@ -25,7 +31,13 @@ var appRouter = function(app) {
           "Get Balance",
           "Get Transaction"
         ],
-        "transaction": []
+        "transaction": [
+          "A Pending Debit of $10.00 was made on 4/1/2017.",
+          "A Pending Credit of $20.00 was made on 4/1/2017.",
+          "A Posted Debit of $30.00 was made on 4/2/2017.",
+          "A Posted Credit of $40.00 was made on 4/2/2017.",
+          "A Pending Debit of $50.00 was made on 4/4/2017.",
+        ]
       },
       {
         "accounttype": "Savings",
@@ -36,7 +48,13 @@ var appRouter = function(app) {
           "Get Balance",
           "Get Transaction"
         ],
-        "transaction": []
+        "transaction": [
+          "A Pending Debit of $10.00 was made on 4/1/2017.",
+          "A Pending Credit of $20.00 was made on 4/1/2017.",
+          "A Posted Debit of $30.00 was made on 4/2/2017.",
+          "A Posted Credit of $40.00 was made on 4/2/2017.",
+          "A Pending Debit of $50.00 was made on 4/4/2017.",
+        ]
       },
       {
         "accounttype": "Credit Card",
@@ -50,7 +68,13 @@ var appRouter = function(app) {
           "Get Transaction",
           "Get Due"
         ],
-        "transaction": []
+        "transaction": [
+          "A Pending Debit of $10.00 was made on 4/1/2017.",
+          "A Pending Credit of $20.00 was made on 4/1/2017.",
+          "A Posted Debit of $30.00 was made on 4/2/2017.",
+          "A Posted Credit of $40.00 was made on 4/2/2017.",
+          "A Pending Debit of $50.00 was made on 4/4/2017.",
+        ]
       },
       {
         "accounttype": "Credit Card",
@@ -64,7 +88,13 @@ var appRouter = function(app) {
           "Get Transaction",
           "Get Due"
         ],
-        "transaction": []
+        "transaction": [
+          "A Pending Debit of $10.00 was made on 4/1/2017.",
+          "A Pending Credit of $20.00 was made on 4/1/2017.",
+          "A Posted Debit of $30.00 was made on 4/2/2017.",
+          "A Posted Credit of $40.00 was made on 4/2/2017.",
+          "A Pending Debit of $50.00 was made on 4/4/2017.",
+        ]
       }
     ]
   };
@@ -315,114 +345,118 @@ var handleAccountBalance = function(req, res) {
 // Start  handleTransactionHistory
 var handleTransactionHistory = function(req, res) {
   console.log("handleTransactionHistory");
+  var p_accountType="";
+  var c_accountType="";
+  var accountType="";
+  var letter="";
+
+  //read the parameters
+  var parameters = req.body.result.parameters;
+  if(parameters!=null){
+    p_accountType = parameters.accountType;
+  }
+
+  // read the context
   var context =  req.body.result.contexts;
-  var accountType;
-  var letter;
   if(context!=null){
     for(var i=0;i<context.length;i++){
       if(context[i].name == "accounttype"){
-        accountType = context[i].parameters.accounttype;
-        console.log(accountType);
+        c_accountType = context[i].parameters.accounttype;
       }
       if(context[i].name == "accountletter"){
         letter = context[i].parameters.accountletter;
-        console.log(letter);
       }
     }
   }
-  console.log(accountType);
-  if(accountType == ""){
-    getSelectAccountTypeResponse(req, res);
+  console.log(p_accountType);
+  console.log(c_accountType);
+  // check for account type param
+  if(p_accountType == "" && c_accountType == ""){
+    getSelectAccountTypeResponse(req, res, "balance");
     return;
+  } else if(p_accountType!="" && c_accountType!="" && c_accountType!=p_accountType){
+    accountType = p_accountType;
+  } else if(p_accountType!="" && c_accountType==""){
+    accountType = p_accountType;
+  } else {
+    accountType = c_accountType;
+  }
+
+  console.log(accountType);
+  console.log(letter);
+  //check for count of accountType
+  var count = account_count(accountType);
+  if(count == 1 || letter != ""){
+    // get balance response
+    getTransResponse(req, res,accountType,letter);
+    return;
+  } else {
+    // get account selection
+    getAccountTypeResponse(req, res,accountType);
+    return;
+  }
+}
+var getTransResponse =function (req, res,accountType,letter) {
+
+  // account balance
+  var GOOGLE_ACC_TRANS_MESSAGE;
+  var FB_ACC_TRANS_TITLE;
+  var FB_ACC_TRANS_SUB_TITLE;
+  var FB_ACC_TRANS_BUTTON=[];
+
+  for(var i=0;i<accountResponse.accounts.length;i++){
+    if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
+      //check for credit card
+      if(accountType != 'credit card'){
+
+        GOOGLE_ACC_TRANS_MESSAGE = "<speak>Ok, I'll review the <say-as interpret-as=\"digits\"> 5</say-as> most recent transactions for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>."+accountResponse.accounts[i].transaction.toString()+".What would you like to do next?</speak>";
+        FB_ACC_TRANS_TITLE = "The available balance is $"+accountResponse.accounts[i].balance+" for your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber+".";
+        FB_ACC_TRANS_SUB_TITLE = "What would you like to do next?";
+      } else {
+        GOOGLE_ACC_TRANS_MESSAGE = "<speak>The current balance for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance+", and you have $"+accountResponse.accounts[i].credit+" of available credit. This balance does not reflect pending transactions. Now, you can review transactions or get due dates for your next payment. What would you like to do next?</speak>";
+        FB_ACC_TRANS_TITLE = "The current balance is $"+accountResponse.accounts[i].balance+" for your credit card account ending in "+accountResponse.accounts[i].accountNumber+".";
+        FB_ACC_TRANS_SUB_TITLE = "What would you like to do next?";
+      }
+
+      // add actions
+      for(var j=0;j<accountResponse.accounts[i].action.length;j++){
+        var button = {"text": accountResponse.accounts[i].action[j],"postback": accountResponse.accounts[i].action[j]};
+        FB_ACC_TRANS_BUTTON.push(button);
+      }
+    }
   }
 
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    if (accountType == 'checking'){
-       var response =
-          {
-          "speech": "",
-          "displayText": "",
-          "messages": [
-                          {
-                            "title": "Your Transaction History as of" + getDate() + " " +getTime(),
-                            "subtitle": "Account No:...3562:",
-                            "buttons": [
-                              {
-                                "text": "-$159.90 on 12/01 Web Author",
-                                "postback": "-$159.90 on 12/01 Web Author"
-                              },
-                              {
-                                "text": "-$19.98 on 12/01 Debit Purc",
-                                "postback": "-$19.98 on 12/01 Debit Purc"
-                              },
-                              {
-                                "text": "+$856.45 on 12/02 Electronic",
-                                "postback": "+$856.45 on 12/02 Electronic"
-                              }
-                            ],
-                            "type": 1
-                          }
-                        ],
-          "contextOut": [],
-          "source": "US Bank"
-          }
-          res.send(response);
-
-    }else if(accountType == 'savings'){
-        var response =
-            {
-            "speech": "",
-            "displayText": "",
-            "messages": [
-                            {
-                              "title": "Your Transaction History as of" + getDate() +  " " +getTime(),
-                              "subtitle": "Account No:...4321:",
-                              "buttons": [
-                                {
-                                  "text": "-$3459.90 on 12/03 Macys",
-                                  "postback": "-$3459.90 on 12/03 Macys"
-                                },
-                                {
-                                  "text": "-$239.98 on 12/05 Sears",
-                                  "postback": "-$239.98 on 12/05 Sears"
-                                },
-                                {
-                                  "text": "-$2000.45 on 12/08 Transfer",
-                                  "postback": "-$2000.45 on 12/08 Transfer"
-                                }
-                              ],
-                              "type": 1
-                            }
-                          ],
-            "contextOut": [],
-            "source": "US Bank"
-            }
-            res.send(response);
+    var response =
+    {
+    "speech": "",
+    "displayText": "",
+    "messages": [
+                    {
+                      "title": FB_ACC_TRANS_TITLE,
+                      "subtitle": FB_ACC_TRANS_SUB_TITLE,
+                      "buttons": FB_ACC_TRANS_BUTTON,
+                      "type": 1
+                    }
+                  ],
+                  "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}},
+                                  {"name":"accountletter", "lifespan":1, "parameters":{"accountletter":letter}}
+                                ],
+    "source": "US Bank"
     }
+    res.send(response);
   } else {
-    if (accountType == 'checkings'){
-      var response =
-        {
-        "speech": "<speak>Your last transaction as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Checking account ending with <say-as interpret-as=\"digits\">7174</say-as> is - $159.90 on <say-as interpret-as=\"date\" format=\"dm\" > 2-12 </say-as>  Web Author</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [],
-        "source": "US Bank"
-        }
-      res.send(response);
-    }else if(accountType == 'savings'){
-      var response =
-        {
-        "speech":  "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Saving account ending with <say-as interpret-as=\"digits\">3813</say-as> is - $45.90 on <say-as interpret-as=\"date\" format=\"dm\" > 3-12 </say-as> Macys</speak>",
-        "displayText": "",
-        "data": {},
-        "contextOut": [],
-        "source": "US Bank"
-        }
-      res.send(response);
-    }
+    var response =
+      {
+      "speech": GOOGLE_ACC_TRANS_MESSAGE,
+      "displayText": "",
+      "data": {},
+      "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}},
+                      {"name":"accountletter", "lifespan":1, "parameters":{"accountletter":letter}}
+                    ],
+      "source": "US Bank"
+      }
+    res.send(response);
   }
 }
 // End handleTransactionHistory
