@@ -345,7 +345,7 @@ var handleTransactionHistory = function(req, res) {
           "messages": [
                           {
                             "title": "Your Transaction History as of" + getDate() + " " +getTime(),
-                            "subtitle": "Account No:...xxx3562:",
+                            "subtitle": "Account No:...3562:",
                             "buttons": [
                               {
                                 "text": "-$159.90 on 12/01 Web Author",
@@ -376,7 +376,7 @@ var handleTransactionHistory = function(req, res) {
             "messages": [
                             {
                               "title": "Your Transaction History as of" + getDate() +  " " +getTime(),
-                              "subtitle": "Account No:...xxx4321:",
+                              "subtitle": "Account No:...4321:",
                               "buttons": [
                                 {
                                   "text": "-$3459.90 on 12/03 Macys",
@@ -470,7 +470,7 @@ var handleDueDateIntent =function (req, res) {
   for(var i=0;i<accountResponse.accounts.length;i++){
     if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
       GOOGLE_DUE_DATE_MESSAGE = "<speak>The payment for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is due <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">"+getDate()+". The minimum payment due is $"+accountResponse.accounts[i].due+". You can make a payment, review transactions, or say help. What would you like to do?</speak>";
-      FB_DUE_DATE_TITLE = "The minimum payment due is $"+accountResponse.accounts[i].due+" for your credit card account ending in xxx"+accountResponse.accounts[i].accountNumber;
+      FB_DUE_DATE_TITLE = "The minimum payment due is $"+accountResponse.accounts[i].due+" for your credit card account ending in "+accountResponse.accounts[i].accountNumber;
       FB_DUE_DATE_SUB_TITLE = "What would you like to do?";
       // add actions
       var button = {"text": "Make Payment","postback": "Make Payment"};
@@ -588,11 +588,11 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       //check for credit card
       if(accountType != 'credit card'){
         GOOGLE_ACC_BAL_MESSAGE = "<speak>The available balance for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance+". Next, you can review recent transactions, or start over. What would you like to do next?</speak>";
-        FB_ACC_BAL_TITLE = "The available balance is $"+accountResponse.accounts[i].balance+" for your "+accountType+" account ending in xxx"+accountResponse.accounts[i].accountNumber+".";
+        FB_ACC_BAL_TITLE = "The available balance is $"+accountResponse.accounts[i].balance+" for your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber+".";
         FB_ACC_BAL_SUB_TITLE = "What would you like to do next?";
       } else {
         GOOGLE_ACC_BAL_MESSAGE = "<speak>The current balance for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance+", and you have $"+accountResponse.accounts[i].credit+" of available credit. This balance does not reflect pending transactions. Now, you can review transactions or get due dates for your next payment. What would you like to do next?</speak>";
-        FB_ACC_BAL_TITLE = "The current balance is $"+accountResponse.accounts[i].balance+" for your credit card account ending in xxx"+accountResponse.accounts[i].accountNumber+".";
+        FB_ACC_BAL_TITLE = "The current balance is $"+accountResponse.accounts[i].balance+" for your credit card account ending in "+accountResponse.accounts[i].accountNumber+".";
         FB_ACC_BAL_SUB_TITLE = "What would you like to do next?";
       }
 
@@ -648,7 +648,7 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
   for(var i=0;i<accountResponse.accounts.length;i++){
     if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
       GOOGLE_ACC_SELECT_MESSAGE = "<speak>Great. For your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>, you can say "+accountResponse.accounts[i].action.toString()+". What would you like to do?</speak>";
-      FB_ACC_SELECT_TITLE = "For your "+accountType+" account ending in xxx"+accountResponse.accounts[i].accountNumber;
+      FB_ACC_SELECT_TITLE = "For your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber;
       FB_ACC_SELECT_SUB_TITLE = "What would you like to do?";
       // add actions
       for(var j=0;j<accountResponse.accounts[i].action.length;j++){
@@ -706,7 +706,7 @@ var getAccountTypeResponse =function (req, res, accountType, action) {
     for(var i=0;i<accountResponse.accounts.length;i++){
       if(accountResponse.accounts[i].accounttype == accountType){
         GOOGLE_ACC_TYPE_MESSAGE = "<speak>Great. For your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>, you can say "+accountResponse.accounts[i].action.toString()+". What would you like to do?</speak>";
-        FB_ACC_TYPE_TITLE = "For your "+accountType+" account ending in xxx"+accountResponse.accounts[i].accountNumber;
+        FB_ACC_TYPE_TITLE = "For your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber;
         FB_ACC_TYPE_SUB_TITLE = "What would you like to do?";
         // add actions
         for(var j=0;j<accountResponse.accounts[i].action.length;j++){
@@ -723,7 +723,7 @@ var getAccountTypeResponse =function (req, res, accountType, action) {
     for(var i=0;i<accountResponse.accounts.length;i++){
       if(accountResponse.accounts[i].accounttype == accountType){
         GOOGLE_ACC_TYPE_MESSAGE = GOOGLE_ACC_TYPE_MESSAGE +" "+accountResponse.accounts[i].option+" account ending with <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>.";
-        var button = {"text": "xxx"+accountResponse.accounts[i].accountNumber+" "+accountType,"postback": accountResponse.accounts[i].option};
+        var button = {"text": ""+accountResponse.accounts[i].accountNumber+" "+accountType,"postback": accountResponse.accounts[i].option};
         FB_ACC_TYPE_BUTTON.push(button);
       }
     }
