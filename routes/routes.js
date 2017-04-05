@@ -403,25 +403,27 @@ var getTransResponse =function (req, res,accountType,letter) {
   var FB_ACC_TRANS_TITLE;
   var FB_ACC_TRANS_SUB_TITLE;
   var FB_ACC_TRANS_BUTTON=[];
+  var FB_ACC_TRANS_ACT_BUTTON=[];
 
   for(var i=0;i<accountResponse.accounts.length;i++){
     if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
-      //check for credit card
-      if(accountType != 'credit card'){
+      GOOGLE_ACC_TRANS_MESSAGE = "<speak>Ok, I'll review the <say-as interpret-as=\"digits\">5</say-as> most recent transactions for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>. "+accountResponse.accounts[i].transaction.toString()+". What would you like to do next?</speak>";
+      FB_ACC_TRANS_TITLE = "Recent transactions for your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber+"</say-as>";
+      FB_ACC_TRANS_SUB_TITLE = "Last 3 transactions";
 
-        GOOGLE_ACC_TRANS_MESSAGE = "<speak>Ok, I'll review the <say-as interpret-as=\"digits\">5</say-as> most recent transactions for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>. "+accountResponse.accounts[i].transaction.toString()+". What would you like to do next?</speak>";
-        FB_ACC_TRANS_TITLE = "The available balance is $"+accountResponse.accounts[i].balance+" for your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber+".";
-        FB_ACC_TRANS_SUB_TITLE = "What would you like to do next?";
-      } else {
-        GOOGLE_ACC_TRANS_MESSAGE = "<speak>The current balance for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance+", and you have $"+accountResponse.accounts[i].credit+" of available credit. This balance does not reflect pending transactions. Now, you can review transactions or get due dates for your next payment. What would you like to do next?</speak>";
-        FB_ACC_TRANS_TITLE = "The current balance is $"+accountResponse.accounts[i].balance+" for your credit card account ending in "+accountResponse.accounts[i].accountNumber+".";
-        FB_ACC_TRANS_SUB_TITLE = "What would you like to do next?";
+      // add transactions
+      for(var j=0;j<accountResponse.accounts[i].transaction.length;j++){
+        if(j==3){
+            break;
+        }
+        var button = {"text": accountResponse.accounts[i].transaction[j],"postback": ""};
+        FB_ACC_TRANS_BUTTON.push(button);
       }
 
       // add actions
       for(var j=0;j<accountResponse.accounts[i].action.length;j++){
         var button = {"text": accountResponse.accounts[i].action[j],"postback": accountResponse.accounts[i].action[j]};
-        FB_ACC_TRANS_BUTTON.push(button);
+        FB_ACC_TRANS_ACT_BUTTON.push(button);
       }
     }
   }
@@ -436,6 +438,12 @@ var getTransResponse =function (req, res,accountType,letter) {
                       "title": FB_ACC_TRANS_TITLE,
                       "subtitle": FB_ACC_TRANS_SUB_TITLE,
                       "buttons": FB_ACC_TRANS_BUTTON,
+                      "type": 1
+                    },
+                    {
+                      "title": "What would you like to do next?",
+                      "subtitle": "Select below option",
+                      "buttons": FB_ACC_TRANS_ACT_BUTTON,
                       "type": 1
                     }
                   ],
