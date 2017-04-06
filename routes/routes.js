@@ -410,12 +410,13 @@ var getTransResponse =function (req, res,accountType,letter) {
         if(j==3){
             break;
         }
-        var trans = " A "+accountResponse.accounts[i].transaction[j].status+" "+accountResponse.accounts[i].transaction[j].type+" of $"+accountResponse.accounts[i].transaction[j].amount+" was made on "+accountResponse.accounts[i].transaction[j].date+".";
-        GOOGLE_ACC_TRANS_MESSAGE = GOOGLE_ACC_TRANS_MESSAGE + trans;
-        var button = {"text": trans,"postback": ""};
+        var trans_G = " A "+accountResponse.accounts[i].transaction[j].status+" "+accountResponse.accounts[i].transaction[j].type+" of $"+accountResponse.accounts[i].transaction[j].amount+" was made on "+accountResponse.accounts[i].transaction[j].date+".";
+        GOOGLE_ACC_TRANS_MESSAGE = GOOGLE_ACC_TRANS_MESSAGE + trans_G;
+        var trans_F = accountResponse.accounts[i].transaction[j].type+" of $"+accountResponse.accounts[i].transaction[j].amount+" on "+accountResponse.accounts[i].transaction[j].date;
+        var button = {"text": trans_F,"postback": ""};
         FB_ACC_TRANS_BUTTON.push(button);
       }
-      GOOGLE_ACC_TRANS_MESSAGE = GOOGLE_ACC_TRANS_MESSAGE+". What would you like to do next?</speak>";
+      GOOGLE_ACC_TRANS_MESSAGE = GOOGLE_ACC_TRANS_MESSAGE+" What would you like to do next?</speak>";
 
       // add actions
       for(var j=0;j<accountResponse.accounts[i].action.length;j++){
