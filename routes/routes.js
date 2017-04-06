@@ -143,6 +143,10 @@ var appRouter = function(app) {
     else if (intent == 'GetTransactionsIntent'){
         handleTransactionHistory(req, res);
     }
+    // handle GetTransactionDetailsIntent
+    else if (intent == 'GetTransactionDetailsIntent'){
+        handleTransactionDetails(req, res);
+    }
     // handle Due Date
     else if (intent == 'GetDueDatesIntent'){
         handleDueDateIntent(req, res);
@@ -413,7 +417,7 @@ var getTransResponse =function (req, res,accountType,letter) {
         var trans_G = " A "+accountResponse.accounts[i].transaction[j].status+" "+accountResponse.accounts[i].transaction[j].type+" of $"+accountResponse.accounts[i].transaction[j].amount+" was made on "+accountResponse.accounts[i].transaction[j].date+".";
         GOOGLE_ACC_TRANS_MESSAGE = GOOGLE_ACC_TRANS_MESSAGE + trans_G;
         var trans_F = accountResponse.accounts[i].transaction[j].type+" of $"+accountResponse.accounts[i].transaction[j].amount+" on "+accountResponse.accounts[i].transaction[j].date;
-        var button = {"text": trans_F,"postback": ""};
+        var button = {"text": trans_F,"postback": ""+j};
         FB_ACC_TRANS_BUTTON.push(button);
       }
       GOOGLE_ACC_TRANS_MESSAGE = GOOGLE_ACC_TRANS_MESSAGE+" What would you like to do next?</speak>";
@@ -466,6 +470,113 @@ var getTransResponse =function (req, res,accountType,letter) {
   }
 }
 // End handleTransactionHistory
+
+// Start  handleTransactionDetails
+var handleTransactionDetails = function(req, res) {
+  console.log("handleTransactionDetails");
+  var accountType="";
+  var letter="";
+  var transnumber = "";
+
+  //read the parameters
+  var parameters = req.body.result.parameters;
+  if(parameters!=null){
+    transnumber = parameters.transnumber;
+  }
+
+  // read the context
+  var context =  req.body.result.contexts;
+  if(context!=null){
+    for(var i=0;i<context.length;i++){
+      if(context[i].name == "accounttype"){
+        accountType = context[i].parameters.accounttype;
+      }
+      if(context[i].name == "accountletter"){
+        letter = context[i].parameters.accountletter;
+      }
+    }
+  }
+
+  console.log(accountType);
+  console.log(letter);
+  console.log(transnumber);
+  // get details response
+  getTransDetailsResponse(req, res, accountType, letter, transnumber);
+  return;
+}
+var getTransDetailsResponse =function (req, res,accountType,letter,transnumber) {
+
+  // account balance
+  var GOOGLE_ACC_TRANS_MESSAGE;
+  var FB_ACC_TRANS_TITLE;
+  var FB_ACC_TRANS_SUB_TITLE;
+  var FB_ACC_TRANS_BUTTON=[];
+  var FB_ACC_TRANS_ACT_BUTTON=[];
+
+  for(var i=0;i<accountResponse.accounts.length;i++){
+    if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
+      // GOOGLE_ACC_TRANS_MESSAGE = "<speak>Ok, I'll review the <say-as interpret-as=\"digits\">3</say-as> most recent transactions for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>.";
+      FB_ACC_TRANS_TITLE = "Recent transactions for your "+accountType+"... "+accountResponse.accounts[i].accountNumber;
+
+      var trans_G = " A "+accountResponse.accounts[i].transaction[transnumber].status+" "+accountResponse.accounts[i].transaction[transnumber].type+" of $"+accountResponse.accounts[i].transaction[transnumber].amount+" was made on "+accountResponse.accounts[i].transaction[transnumber].date+".";
+
+      FB_ACC_TRANS_SUB_TITLE = trans_G;
+
+      // add transactions
+      // for(var j=0;j<accountResponse.accounts[i].transaction.length;j++){
+      //   if(j==3){
+      //       break;
+      //   }
+      //   var trans_G = " A "+accountResponse.accounts[i].transaction[j].status+" "+accountResponse.accounts[i].transaction[j].type+" of $"+accountResponse.accounts[i].transaction[j].amount+" was made on "+accountResponse.accounts[i].transaction[j].date+".";
+      //   GOOGLE_ACC_TRANS_MESSAGE = GOOGLE_ACC_TRANS_MESSAGE + trans_G;
+      //   var trans_F = accountResponse.accounts[i].transaction[j].type+" of $"+accountResponse.accounts[i].transaction[j].amount+" on "+accountResponse.accounts[i].transaction[j].date;
+      //   var button = {"text": trans_F,"postback": ""+j};
+      //   FB_ACC_TRANS_BUTTON.push(button);
+      // }
+      // GOOGLE_ACC_TRANS_MESSAGE = GOOGLE_ACC_TRANS_MESSAGE+" What would you like to do next?</speak>";
+
+      // add actions
+      // for(var j=0;j<accountResponse.accounts[i].action.length;j++){
+      //   var button = {"text": accountResponse.accounts[i].action[j],"postback": accountResponse.accounts[i].action[j]};
+      //   FB_ACC_TRANS_ACT_BUTTON.push(button);
+      // }
+    }
+  }
+
+  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+    var response =
+    {
+    "speech": "",
+    "displayText": "",
+    "messages": [
+                    {
+                      "title": FB_ACC_TRANS_TITLE,
+                      "subtitle": FB_ACC_TRANS_SUB_TITLE,
+                      "buttons": FB_ACC_TRANS_BUTTON,
+                      "type": 1
+                    }
+                  ],
+                  "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}},
+                                  {"name":"accountletter", "lifespan":1, "parameters":{"accountletter":letter}}
+                                ],
+    "source": "US Bank"
+    }
+    res.send(response);
+  } else {
+    var response =
+      {
+      "speech": GOOGLE_ACC_TRANS_MESSAGE,
+      "displayText": "",
+      "data": {},
+      "contextOut": [{"name":"accounttype", "lifespan":1, "parameters":{"accounttype":accountType}},
+                      {"name":"accountletter", "lifespan":1, "parameters":{"accountletter":letter}}
+                    ],
+      "source": "US Bank"
+      }
+    res.send(response);
+  }
+}
+// End handleTransactionDetails
 
 // start handleDueDateIntent
 var handleDueDateIntent =function (req, res) {
