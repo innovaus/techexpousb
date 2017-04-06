@@ -412,8 +412,8 @@ var getTransResponse =function (req, res,accountType,letter) {
   for(var i=0;i<accountResponse.accounts.length;i++){
     if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
       GOOGLE_ACC_TRANS_MESSAGE = "<speak>Ok, I'll review the <say-as interpret-as=\"digits\">5</say-as> most recent transactions for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>. "+accountResponse.accounts[i].transaction.toString()+". What would you like to do next?</speak>";
-      FB_ACC_TRANS_TITLE = "Recent transactions for your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber;
-      FB_ACC_TRANS_SUB_TITLE = "Last 3 transactions";
+      FB_ACC_TRANS_TITLE = "Recent transactions for your "+accountType+"... "+accountResponse.accounts[i].accountNumber;
+      FB_ACC_TRANS_SUB_TITLE = "Last 3 transactions are";
 
       // add transactions
       for(var j=0;j<accountResponse.accounts[i].transaction.length;j++){
@@ -651,11 +651,11 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       //check for credit card
       if(accountType != 'Credit Card'){
         GOOGLE_ACC_BAL_MESSAGE = "<speak>The available balance for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance+". Next, you can review recent transactions, or start over. What would you like to do next?</speak>";
-        FB_ACC_BAL_TITLE = "The available balance is $"+accountResponse.accounts[i].balance+" for your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber+".";
+        FB_ACC_BAL_TITLE = "The available balance is $"+accountResponse.accounts[i].balance+" for your "+accountType+"... "+accountResponse.accounts[i].accountNumber+".";
         FB_ACC_BAL_SUB_TITLE = "What would you like to do next?";
       } else {
         GOOGLE_ACC_BAL_MESSAGE = "<speak>The current balance for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].currentbalance+", and you have $"+accountResponse.accounts[i].availablecredit+" of available credit. This balance does not reflect pending transactions. Now, you can review transactions or get due dates for your next payment. What would you like to do next?</speak>";
-        FB_ACC_BAL_TITLE = "Current balance is $"+accountResponse.accounts[i].currentbalance+" and $"+accountResponse.accounts[i].availablecredit+" of available credit in credit card account..."+accountResponse.accounts[i].accountNumber+".";
+        FB_ACC_BAL_TITLE = "Current Balance is $"+accountResponse.accounts[i].currentbalance+" and Available Credit is $"+accountResponse.accounts[i].availablecredit+" in Credit Card..."+accountResponse.accounts[i].accountNumber+".";
         FB_ACC_BAL_SUB_TITLE = "What would you like to do next?";
       }
 
