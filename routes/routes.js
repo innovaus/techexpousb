@@ -208,21 +208,24 @@ var handleWelcomeIntent = function(req, res) {
     "speech": "",
     "displayText": "",
     "messages": [
-    {
-      "type":"1",
-            "title":"Welcome to Peter\'s Hats",
-            "subtitle":"We\'ve got the right hat for everyone.",
-            "buttons":[
-              {
-
-                "title":"View Website"
-              },{
-                
-                "payload":"DEVELOPER_DEFINED_PAYLOAD"
-              }
-            ]
-    }
-  ],
+                    {
+                      "title": FB_WELCOME_TITLE,
+                      "subtitle": FB_WELCOME_SUB_TITLE,
+                      "buttons": FB_WELCOME_BUTTON,
+                      "type": 1
+                    },
+                    {
+                      "title": "Other Queries",
+                      "subtitle": "",
+                      "buttons": [
+                        {
+                          "text": "Help",
+                          "postback": "Help"
+                        }
+                      ],
+                      "type": 1
+                    }
+                  ],
     "contextOut": [],
     "source": "US Bank"
     }
