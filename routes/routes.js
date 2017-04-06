@@ -207,9 +207,8 @@ var handleWelcomeIntent = function(req, res) {
     {
     "speech": "",
     "displayText": "",
-    "messages": {
-    "attachment":{
-      "type":"template",
+    "messages": [
+      "type":"1",
       "payload":{
         "template_type":"generic",
         "elements":[
@@ -238,8 +237,8 @@ var handleWelcomeIntent = function(req, res) {
           }
         ]
       }
-    }
-  },
+
+  ],
     "contextOut": [],
     "source": "US Bank"
     }
