@@ -711,7 +711,7 @@ var getAccountSelectResponse =function (req, res, accountType, letter) {
   for(var i=0;i<accountResponse.accounts.length;i++){
     if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
       GOOGLE_ACC_SELECT_MESSAGE = "<speak>Great. For your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>, you can say "+accountResponse.accounts[i].action.toString()+". What would you like to do?</speak>";
-      FB_ACC_SELECT_TITLE = "For your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber;
+      FB_ACC_SELECT_TITLE = "For your "+accountType+"... "+accountResponse.accounts[i].accountNumber;
       FB_ACC_SELECT_SUB_TITLE = "What would you like to do?";
       // add actions
       for(var j=0;j<accountResponse.accounts[i].action.length;j++){
