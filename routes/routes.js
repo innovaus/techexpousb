@@ -211,16 +211,13 @@ var handleWelcomeIntent = function(req, res) {
     {
       "type":"1",
             "title":"Welcome to Peter\'s Hats",
-            "image_url":"https://petersfancybrownhats.com/company_image.png",
             "subtitle":"We\'ve got the right hat for everyone.",
             "buttons":[
               {
-                "type":"web_url",
-                "url":"https://petersfancybrownhats.com",
+
                 "title":"View Website"
               },{
-                "type":"postback",
-                "title":"Start Chatting",
+                
                 "payload":"DEVELOPER_DEFINED_PAYLOAD"
               }
             ]
