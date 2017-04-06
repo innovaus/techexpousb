@@ -207,25 +207,39 @@ var handleWelcomeIntent = function(req, res) {
     {
     "speech": "",
     "displayText": "",
-    "messages": [
-                    {
-                      "title": FB_WELCOME_TITLE,
-                      "subtitle": FB_WELCOME_SUB_TITLE,
-                      "buttons": FB_WELCOME_BUTTON,
-                      "type": 1
-                    },
-                    {
-                      "title": "Other Queries",
-                      "subtitle": "",
-                      "buttons": [
-                        {
-                          "text": "Help",
-                          "postback": "Help"
-                        }
-                      ],
-                      "type": 1
-                    }
-                  ],
+    "messages": {
+    "attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"generic",
+        "elements":[
+           {
+            "title":"Welcome to Peter\'s Hats",
+            "image_url":"https://petersfancybrownhats.com/company_image.png",
+            "subtitle":"We\'ve got the right hat for everyone.",
+            "default_action": {
+              "type": "web_url",
+              "url": "https://peterssendreceiveapp.ngrok.io/view?item=103",
+              "messenger_extensions": true,
+              "webview_height_ratio": "tall",
+              "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+            },
+            "buttons":[
+              {
+                "type":"web_url",
+                "url":"https://petersfancybrownhats.com",
+                "title":"View Website"
+              },{
+                "type":"postback",
+                "title":"Start Chatting",
+                "payload":"DEVELOPER_DEFINED_PAYLOAD"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
     "contextOut": [],
     "source": "US Bank"
     }
