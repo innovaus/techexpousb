@@ -782,7 +782,7 @@ var getAccountTypeResponse =function (req, res, accountType, action) {
     for(var i=0;i<accountResponse.accounts.length;i++){
       if(accountResponse.accounts[i].accounttype == accountType){
         GOOGLE_ACC_TYPE_MESSAGE = GOOGLE_ACC_TYPE_MESSAGE +" "+accountResponse.accounts[i].option+" account ending with <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>.";
-        var button = {"text": ""+accountResponse.accounts[i].accountNumber+" "+accountType,"postback": accountResponse.accounts[i].option};
+        var button = {"text": accountType+"... "+accountResponse.accounts[i].accountNumber,"postback": accountResponse.accounts[i].option};
         FB_ACC_TYPE_BUTTON.push(button);
       }
     }
