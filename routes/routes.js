@@ -63,7 +63,7 @@ var appRouter = function(app) {
         "availablecredit": "10,956.58",
         "stbalance": "8,054.43",
         "due": "554.32",
-        "dueon": "05/01/2017"
+        "dueon": "05/01/2017",
         "option": "a",
         "action": [
           "Get Balance",
@@ -85,7 +85,7 @@ var appRouter = function(app) {
         "availablecredit": "18,323.56",
         "stbalance": "6,452.97",
         "due": "155.32",
-        "dueon": "05/01/2017"
+        "dueon": "05/01/2017",
         "option": "b",
         "action": [
           "Get Balance",
