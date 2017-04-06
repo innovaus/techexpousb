@@ -59,9 +59,11 @@ var appRouter = function(app) {
       {
         "accounttype": "Credit Card",
         "accountNumber": "4571",
-        "balance": "36,043.42",
-        "credit": "10,956.58",
-        "due": "2,500.32",
+        "currentbalance": "36,043.42",
+        "availablecredit": "10,956.58",
+        "stbalance": "8,054.43",
+        "due": "554.32",
+        "dueon": "05/01/2017"
         "option": "a",
         "action": [
           "Get Balance",
@@ -79,9 +81,11 @@ var appRouter = function(app) {
       {
         "accounttype": "Credit Card",
         "accountNumber": "7352",
-        "balance": "6,676.44",
-        "credit": "18,323.56",
-        "due": "89.23",
+        "currentbalance": "6,676.44",
+        "availablecredit": "18,323.56",
+        "stbalance": "6,452.97",
+        "due": "155.32",
+        "dueon": "05/01/2017"
         "option": "b",
         "action": [
           "Get Balance",
@@ -650,8 +654,8 @@ var getBalanceResponse =function (req, res,accountType,letter) {
         FB_ACC_BAL_TITLE = "The available balance is $"+accountResponse.accounts[i].balance+" for your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber+".";
         FB_ACC_BAL_SUB_TITLE = "What would you like to do next?";
       } else {
-        GOOGLE_ACC_BAL_MESSAGE = "<speak>The current balance for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance+", and you have $"+accountResponse.accounts[i].credit+" of available credit. This balance does not reflect pending transactions. Now, you can review transactions or get due dates for your next payment. What would you like to do next?</speak>";
-        FB_ACC_BAL_TITLE = "The current balance is $"+accountResponse.accounts[i].balance+" for your credit card account..."+accountResponse.accounts[i].accountNumber+".";
+        GOOGLE_ACC_BAL_MESSAGE = "<speak>The current balance for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].currentbalance+", and you have $"+accountResponse.accounts[i].availablecredit+" of available credit. This balance does not reflect pending transactions. Now, you can review transactions or get due dates for your next payment. What would you like to do next?</speak>";
+        FB_ACC_BAL_TITLE = "Current balance is $"+accountResponse.accounts[i].currentbalance+" and $"+accountResponse.accounts[i].availablecredit+" of available credit in credit card account..."+accountResponse.accounts[i].accountNumber+".";
         FB_ACC_BAL_SUB_TITLE = "What would you like to do next?";
       }
 
