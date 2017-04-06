@@ -210,7 +210,6 @@ var handleWelcomeIntent = function(req, res) {
     "messages": [
     {
       "type":"1",
-           {
             "title":"Welcome to Peter\'s Hats",
             "image_url":"https://petersfancybrownhats.com/company_image.png",
             "subtitle":"We\'ve got the right hat for everyone.",
@@ -232,8 +231,6 @@ var handleWelcomeIntent = function(req, res) {
                 "payload":"DEVELOPER_DEFINED_PAYLOAD"
               }
             ]
-          }
-
     }
   ],
     "contextOut": [],
