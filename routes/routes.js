@@ -521,7 +521,7 @@ var handleDueDateIntent =function (req, res) {
   for(var i=0;i<accountResponse.accounts.length;i++){
     if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
       GOOGLE_DUE_DATE_MESSAGE = "<speak>The payment for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is due <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">"+getDate()+". The minimum payment due is $"+accountResponse.accounts[i].due+". You can make a payment, review transactions, or say help. What would you like to do?</speak>";
-      FB_DUE_DATE_TITLE = "The minimum payment due is $"+accountResponse.accounts[i].due+" for your credit card account ending in "+accountResponse.accounts[i].accountNumber;
+      FB_DUE_DATE_TITLE = "Minimum payment $"+accountResponse.accounts[i].due+" due on "+accountResponse.accounts[i].dueon+" for your Credit Card... "+accountResponse.accounts[i].accountNumber;
       FB_DUE_DATE_SUB_TITLE = "What would you like to do?";
       // add actions
       var button = {"text": "Make Payment","postback": "Make Payment"};
@@ -651,7 +651,7 @@ var getBalanceResponse =function (req, res,accountType,letter) {
       //check for credit card
       if(accountType != 'Credit Card'){
         GOOGLE_ACC_BAL_MESSAGE = "<speak>The available balance for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance+". Next, you can review recent transactions, or start over. What would you like to do next?</speak>";
-        FB_ACC_BAL_TITLE = "The available balance is $"+accountResponse.accounts[i].balance+" for your "+accountType+"... "+accountResponse.accounts[i].accountNumber+".";
+        FB_ACC_BAL_TITLE = "Available Balance is $"+accountResponse.accounts[i].balance+" for your "+accountType+"... "+accountResponse.accounts[i].accountNumber+".";
         FB_ACC_BAL_SUB_TITLE = "What would you like to do next?";
       } else {
         GOOGLE_ACC_BAL_MESSAGE = "<speak>The current balance for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].currentbalance+", and you have $"+accountResponse.accounts[i].availablecredit+" of available credit. This balance does not reflect pending transactions. Now, you can review transactions or get due dates for your next payment. What would you like to do next?</speak>";
