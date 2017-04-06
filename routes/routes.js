@@ -645,13 +645,13 @@ var getBalanceResponse =function (req, res,accountType,letter) {
   for(var i=0;i<accountResponse.accounts.length;i++){
     if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
       //check for credit card
-      if(accountType != 'credit card'){
+      if(accountType != 'Credit Card'){
         GOOGLE_ACC_BAL_MESSAGE = "<speak>The available balance for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance+". Next, you can review recent transactions, or start over. What would you like to do next?</speak>";
         FB_ACC_BAL_TITLE = "The available balance is $"+accountResponse.accounts[i].balance+" for your "+accountType+" account ending in "+accountResponse.accounts[i].accountNumber+".";
         FB_ACC_BAL_SUB_TITLE = "What would you like to do next?";
       } else {
         GOOGLE_ACC_BAL_MESSAGE = "<speak>The current balance for your credit card account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as> is $"+accountResponse.accounts[i].balance+", and you have $"+accountResponse.accounts[i].credit+" of available credit. This balance does not reflect pending transactions. Now, you can review transactions or get due dates for your next payment. What would you like to do next?</speak>";
-        FB_ACC_BAL_TITLE = "The current balance is $"+accountResponse.accounts[i].balance+" for your credit card account ending in "+accountResponse.accounts[i].accountNumber+".";
+        FB_ACC_BAL_TITLE = "The current balance is $"+accountResponse.accounts[i].balance+" for your credit card account..."+accountResponse.accounts[i].accountNumber+".";
         FB_ACC_BAL_SUB_TITLE = "What would you like to do next?";
       }
 
