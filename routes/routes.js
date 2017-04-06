@@ -208,6 +208,7 @@ var handleWelcomeIntent = function(req, res) {
     "speech": "",
     "displayText": "",
     "messages": [
+    {
       "type":"1",
       "payload":{
         "template_type":"generic",
@@ -237,7 +238,7 @@ var handleWelcomeIntent = function(req, res) {
           }
         ]
       }
-
+    }
   ],
     "contextOut": [],
     "source": "US Bank"
