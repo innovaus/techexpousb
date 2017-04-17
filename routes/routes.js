@@ -488,7 +488,7 @@ var getTransResponse =function (req, res,accountType,letter) {
     if(accountResponse.accounts[i].accounttype == accountType && accountResponse.accounts[i].option == letter){
       GOOGLE_ACC_TRANS_MESSAGE = "<speak>Ok, I'll review the <say-as interpret-as=\"digits\">3</say-as> most recent transactions for your "+accountType+" account ending in <say-as interpret-as=\"digits\">"+accountResponse.accounts[i].accountNumber+"</say-as>.";
       FB_ACC_TRANS_TITLE = "Recent transactions for your "+accountType+"... "+accountResponse.accounts[i].accountNumber;
-      FB_ACC_TRANS_SUB_TITLE = "Last 3 transactions are";
+      FB_ACC_TRANS_SUB_TITLE = "Most recent transactions are";
 
       // add transactions
       for(var j=0;j<accountResponse.accounts[i].transaction.length;j++){
