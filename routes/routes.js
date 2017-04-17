@@ -8,55 +8,55 @@ var appRouter = function(app) {
       {
         "accounttype": "Checking",
         "accountNumber": "7174",
-        "balance": "727.41",
+        "balance": "592.41",
         "option": "a",
         "action": [
           "Get Balance",
           "Get Transaction"
         ],
         "transaction": [
-          {"status":"Pending", "type":"Debit", "amount":"10.00", "date":"4/1/2017"},
-          {"status":"Pending", "type":"Credit", "amount":"20.00", "date":"4/1/2017"},
-          {"status":"Posted", "type":"Debit", "amount":"30.00", "date":"4/2/2017"}
+          {"status":"Posted", "type":"Debit", "amount":"25.00", "date":"04/07/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"44.17", "date":"02/17/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"15.25", "date":"02/17/2017"}
         ]
       },
       {
         "accounttype": "Checking",
         "accountNumber": "5901",
-        "balance": "0.25",
+        "balance": "480.25",
         "option": "b",
         "action": [
           "Get Balance",
           "Get Transaction"
         ],
         "transaction": [
-          {"status":"Pending", "type":"Debit", "amount":"10.00", "date":"4/1/2017"},
-          {"status":"Pending", "type":"Credit", "amount":"20.00", "date":"4/1/2017"},
-          {"status":"Posted", "type":"Debit", "amount":"30.00", "date":"4/2/2017"}
+          {"status":"Posted", "type":"Credit", "amount":"8.95", "date":"04/07/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"8.95", "date":"04/07/2017"},
+          {"status":"Posted", "type":"Credit", "amount":"8.95", "date":"02/07/2017"}
         ]
       },
       {
         "accounttype": "Savings",
         "accountNumber": "3813",
-        "balance": "1,017.17",
+        "balance": "517.21",
         "option": "",
         "action": [
           "Get Balance",
           "Get Transaction"
         ],
         "transaction": [
-          {"status":"Pending", "type":"Debit", "amount":"10.00", "date":"4/1/2017"},
-          {"status":"Pending", "type":"Credit", "amount":"20.00", "date":"4/1/2017"},
-          {"status":"Posted", "type":"Debit", "amount":"30.00", "date":"4/2/2017"}
+          {"status":"Posted", "type":"Debit", "amount":"23.00", "date":"04/14/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"10.00", "date":"04/14/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"10.00", "date":"04/14/2017"}
         ]
       },
       {
         "accounttype": "Credit Card",
         "accountNumber": "4571",
-        "currentbalance": "36,043.42",
-        "availablecredit": "10,956.58",
-        "stbalance": "8,054.43",
-        "due": "554.32",
+        "currentbalance": "48,796.33",
+        "availablecredit": "0.00",
+        "stbalance": "38,054.43",
+        "due": "543.00",
         "dueon": "05/01/2017",
         "option": "a",
         "action": [
@@ -65,18 +65,18 @@ var appRouter = function(app) {
           "Get Due"
         ],
         "transaction": [
-          {"status":"Pending", "type":"Debit", "amount":"10.00", "date":"4/1/2017"},
-          {"status":"Pending", "type":"Credit", "amount":"20.00", "date":"4/1/2017"},
-          {"status":"Posted", "type":"Debit", "amount":"30.00", "date":"4/2/2017"}
+          {"status":"Pending", "type":"Credit", "amount":"1.00", "date":"04/17/2017"},
+          {"status":"Pending", "type":"Debit", "amount":"1.00", "date":"04/17/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"10,000.00", "date":"04/13/2017"}
         ]
       },
       {
         "accounttype": "Credit Card",
         "accountNumber": "7352",
-        "currentbalance": "6,676.44",
-        "availablecredit": "18,323.56",
+        "currentbalance": "7,033.97",
+        "availablecredit": "17,966.03",
         "stbalance": "6,452.97",
-        "due": "155.32",
+        "due": "20.00",
         "dueon": "05/01/2017",
         "option": "b",
         "action": [
@@ -85,9 +85,9 @@ var appRouter = function(app) {
           "Get Due"
         ],
         "transaction": [
-          {"status":"Pending", "type":"Debit", "amount":"10.00", "date":"4/1/2017"},
-          {"status":"Pending", "type":"Credit", "amount":"20.00", "date":"4/1/2017"},
-          {"status":"Posted", "type":"Debit", "amount":"30.00", "date":"4/2/2017"}
+          {"status":"Posted", "type":"Credit", "amount":"10.00", "date":"04/13/2017"},
+          {"status":"Posted", "type":"Credit", "amount":"20.00", "date":"04/13/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"800.00", "date":"04/13/2017"}
         ]
       }
     ]
