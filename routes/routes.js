@@ -4,175 +4,94 @@ var appRouter = function(app) {
 
   // response JSON
   var accountResponse = {
-  "accounts": [
-    {
-      "accounttype": "Checking",
-      "accountNumber": "7300",
-      "balance": "437.59",
-      "option": "a",
-      "action": [
-        "Get Balance",
-        "Get Transaction"
-      ],
-      "transaction": [
-        {
-          "status": "Posted",
-          "type": "Debit",
-          "amount": "1,892.48",
-          "date": "03/15/2017"
-        },
-        {
-          "status": "Posted",
-          "type": "Debit",
-          "amount": "23.80",
-          "date": "03/15/2017"
-        },
-        {
-          "status": "Posted",
-          "type": "Debit",
-          "amount": "2,000.00",
-          "date": "03/15/2017"
-        }
-      ]
-    },
-    {
-      "accounttype": "Checking",
-      "accountNumber": "6800",
-      "balance": "19,430.00",
-      "option": "b",
-      "action": [
-        "Get Balance",
-        "Get Transaction"
-      ],
-      "transaction": [
-        {
-          "status": "Posted",
-          "type": "Debit",
-          "amount": "5.00",
-          "date": "04/14/2017"
-        },
-        {
-          "status": "Posted",
-          "type": "Debit",
-          "amount": "5.00",
-          "date": "04/13/2017"
-        },
-        {
-          "status": "Posted",
-          "type": "Debit",
-          "amount": "5.00",
-          "date": "04/13/2017"
-        }
-      ]
-    },
-    {
-      "accounttype": "Savings",
-      "accountNumber": "1238",
-      "balance": "6,778.89",
-      "option": "a",
-      "action": [
-        "Get Balance",
-        "Get Transaction"
-      ],
-      "transaction": [
-        {
-          "status": "Posted",
-          "type": "Credit",
-          "amount": "302.34",
-          "date": "01/27/2017"
-        }
-      ]
-    },
-    {
-      "accounttype": "Savings",
-      "accountNumber": "1725",
-      "balance": "16,082.32",
-      "option": "b",
-      "action": [
-        "Get Balance",
-        "Get Transaction"
-      ],
-      "transaction": [
-        {
-          "status": "Posted",
-          "type": "Debit",
-          "amount": "2,000.00",
-          "date": "03/06/2017"
-        }
-      ]
-    },
-    {
-      "accounttype": "Credit Card",
-      "accountNumber": "4911",
-      "currentbalance": "6,153.39",
-      "availablecredit": "14,346.61",
-      "stbalance": "6,138.78",
-      "due": "142.00",
-      "dueon": "04/16/2017",
-      "option": "a",
-      "action": [
-        "Get Balance",
-        "Get Transaction",
-        "Get Due"
-      ],
-      "transaction": [
-        {
-          "status": "Posted",
-          "type": "Debit",
-          "amount": "14.61",
-          "date": "03/31/2017"
-        },
-        {
-          "status": "Posted",
-          "type": "Debit",
-          "amount": "81.18",
-          "date": "03/17/2017"
-        },
-        {
-          "status": "Posted",
-          "type": "Credit",
-          "amount": "200.00",
-          "date": "03/14/2017"
-        }
-      ]
-    },
-    {
-      "accounttype": "Credit Card",
-      "accountNumber": "4571",
-      "currentbalance": "32,192.47",
-      "availablecredit": "14,783.04",
-      "stbalance": "32,702.47",
-      "due": "510.00",
-      "dueon": "05/01/2017",
-      "option": "b",
-      "action": [
-        "Get Balance",
-        "Get Transaction",
-        "Get Due"
-      ],
-      "transaction": [
-        {
-          "status": "Pending",
-          "type": "Credit",
-          "amount": "510.00",
-          "date": "04/13/2017"
-        },
-        {
-          "status": "Pending",
-          "type": "Debit",
-          "amount": "24.49",
-          "date": "03/16/2017"
-        },
-        {
-          "status": "Pending",
-          "type": "Credit",
-          "amount": "1.00",
-          "date": "03/16/2017"
-        }
-      ]
-    }
-  ]
-};
+    "accounts": [
+      {
+        "accounttype": "Checking",
+        "accountNumber": "7174",
+        "balance": "592.41",
+        "option": "a",
+        "action": [
+          "Get Balance",
+          "Get Transaction"
+        ],
+        "transaction": [
+          {"status":"Posted", "type":"Debit", "amount":"25.00", "date":"04/07/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"44.17", "date":"02/17/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"15.25", "date":"02/17/2017"}
+        ]
+      },
+      {
+        "accounttype": "Checking",
+        "accountNumber": "5901",
+        "balance": "480.25",
+        "option": "b",
+        "action": [
+          "Get Balance",
+          "Get Transaction"
+        ],
+        "transaction": [
+          {"status":"Posted", "type":"Credit", "amount":"8.95", "date":"04/07/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"8.95", "date":"04/07/2017"},
+          {"status":"Posted", "type":"Credit", "amount":"8.95", "date":"02/07/2017"}
+        ]
+      },
+      {
+        "accounttype": "Savings",
+        "accountNumber": "3813",
+        "balance": "517.21",
+        "option": "",
+        "action": [
+          "Get Balance",
+          "Get Transaction"
+        ],
+        "transaction": [
+          {"status":"Posted", "type":"Debit", "amount":"23.00", "date":"04/14/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"10.00", "date":"04/14/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"10.00", "date":"04/14/2017"}
+        ]
+      },
+      {
+        "accounttype": "Credit Card",
+        "accountNumber": "4571",
+        "currentbalance": "48,796.33",
+        "availablecredit": "0.00",
+        "stbalance": "38,054.43",
+        "due": "543.00",
+        "dueon": "05/01/2017",
+        "option": "a",
+        "action": [
+          "Get Balance",
+          "Get Transaction",
+          "Get Due"
+        ],
+        "transaction": [
+          {"status":"Pending", "type":"Credit", "amount":"1.00", "date":"04/17/2017"},
+          {"status":"Pending", "type":"Debit", "amount":"1.00", "date":"04/17/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"10,000.00", "date":"04/13/2017"}
+        ]
+      },
+      {
+        "accounttype": "Credit Card",
+        "accountNumber": "7352",
+        "currentbalance": "7,033.97",
+        "availablecredit": "17,966.03",
+        "stbalance": "6,452.97",
+        "due": "20.00",
+        "dueon": "05/01/2017",
+        "option": "b",
+        "action": [
+          "Get Balance",
+          "Get Transaction",
+          "Get Due"
+        ],
+        "transaction": [
+          {"status":"Posted", "type":"Credit", "amount":"10.00", "date":"04/13/2017"},
+          {"status":"Posted", "type":"Credit", "amount":"20.00", "date":"04/13/2017"},
+          {"status":"Posted", "type":"Debit", "amount":"800.00", "date":"04/13/2017"}
+        ]
+      }
+    ]
+  };
   function uniq_fast(a) {
       var seen = {};
       var out = [];
