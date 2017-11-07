@@ -233,25 +233,30 @@ var handleWelcomeIntent = function(req, res) {
       {
       "speech":GOOGLE_WELCOME_MESSAGE,
       "displayText": "",
-        "messages": [{"title":"Security Code Information", "formattedText":"Blah"}],
+        "messages": [
+        {
+            "platform": "google",
+            "type": "basic_card",
+            "title": "Blah",
+            "subtitle": "Blah Blah",
+            "formattedText": "Blah Blah Blah",
+            "image": {
+                "url": "http://example.com/image.png",
+                "accessibilityText": "image descrition for screen readers"  /* this property is now required */
+            },
+            "buttons": [
+                {
+                    "title": "Link title",
+                    "openUrlAction": {
+                        "url": "https://example.com/linkout.html"
+                    }
+                }
+            ]
+        }
+}
+        ],
       "data": {
-         "google":{
-            "expected_inputs":{
-               "input_prompt":{
-                  "rich_initial_prompt":{
-                     "items":[
-                        {
-                           "basicCard":{
-                              "title":"Blah",
-                              "subtitle":"Blah Blah",
-                              "formattedText":"Blah Blah Blah"
-                           }
-                        }
-                     ]
-                  }
-               }
-            }
-         }
+         
       },
       "contextOut": [],
       "source": "US Bank"
