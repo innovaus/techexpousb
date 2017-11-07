@@ -233,6 +233,7 @@ var handleWelcomeIntent = function(req, res) {
       {
       "speech":GOOGLE_WELCOME_MESSAGE,
       "displayText": "",
+        "messages": [{"title":"Security Code Information", "formattedText":"Blah"}],
       "data": {"google":{
       "inputPrompt":{
          "richInitialPrompt":{
