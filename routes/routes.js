@@ -235,8 +235,8 @@ var handleWelcomeIntent = function(req, res) {
       "displayText": "",
         "messages": [{"title":"Security Code Information", "formattedText":"Blah"}],
       "data": {"google":{
-      "inputPrompt":{
-         "richInitialPrompt":{
+      "input_prompt":{
+         "rich_initial_prompt":{
             "items":[
                {
                   "basicCard":{
