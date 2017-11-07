@@ -234,21 +234,25 @@ var handleWelcomeIntent = function(req, res) {
       "speech":GOOGLE_WELCOME_MESSAGE,
       "displayText": "",
         "messages": [{"title":"Security Code Information", "formattedText":"Blah"}],
-      "data": {"google":{
-      "input_prompt":{
-         "rich_initial_prompt":{
-            "items":[
-               {
-                  "basicCard":{
-                     "title":"Blah",
-                     "subtitle":"Blah Blah",
-                     "formattedText":"Blah Blah Blah"
+      "data": {
+         "google":{
+            "expected_inputs":{
+               "input_prompt":{
+                  "rich_initial_prompt":{
+                     "items":[
+                        {
+                           "basicCard":{
+                              "title":"Blah",
+                              "subtitle":"Blah Blah",
+                              "formattedText":"Blah Blah Blah"
+                           }
+                        }
+                     ]
                   }
                }
-            ]
+            }
          }
-      }
-   }},
+      },
       "contextOut": [],
       "source": "US Bank"
       }
