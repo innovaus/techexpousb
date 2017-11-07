@@ -233,7 +233,21 @@ var handleWelcomeIntent = function(req, res) {
       {
       "speech":GOOGLE_WELCOME_MESSAGE,
       "displayText": "",
-      "data": {},
+      "data": {"google":{
+      "inputPrompt":{
+         "richInitialPrompt":{
+            "items":[
+               {
+                  "basicCard":{
+                     "title":"Blah",
+                     "subtitle":"Blah Blah",
+                     "formattedText":"Blah Blah Blah"
+                  }
+               }
+            ]
+         }
+      }
+   }},
       "contextOut": [],
       "source": "US Bank"
       }
