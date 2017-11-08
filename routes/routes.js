@@ -234,12 +234,6 @@ var handleWelcomeIntent = function(req, res) {
       "speech":GOOGLE_WELCOME_MESSAGE,
       "displayText": "",
         "messages": [
-       {
-            "speech": GOOGLE_WELCOME_MESSAGE, 
-            "type": 0
-        },
-
-        
         {
             "platform": "google",
             "type": "simple_response",
